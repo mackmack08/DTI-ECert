@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  
+    <link rel="stylesheet" href="style.css">
+    <title>HELLO, DTI!</title>  
+  </head>
+  <body>
+   <div class="d-flex">
+     <!-- Sidebar -->
+      <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 320px; min-height: 100vh; background-color: rgb(11, 6, 44);">
+        <div class="d-flex align-items-center mb-3 sidebar-header">
+          <img class="me-2" style="width: 80px; height: auto;" src="img/dtilogo.png" alt="DTI">
+          <h3 style="font-size: 20px; color: aliceblue;">E-CERTIFICATION <BR> SYSTEM</h3>
+      
+          <button class="close-btn" style="margin-top: -20px;" onclick="toggleSidebar()">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+       
+        <hr style=" background-color: #ff0000; width: 100%; height: 5px; opacity: 1;">
+
+       <ul class="nav nav-pills flex-column mb-auto">
+         <li class="nav-item text-box">  
+           <a href="#" class="nav-link">
+             <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+             DASHBOARD
+           </a>
+         </li>
+         <li class="nav-item mt-2 text-box">
+           <a href="#" class="nav-link">
+             <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+             REPORTS AND ANALYTICS
+           </a>
+         </li>
+         <li class="nav-item mt-2 text-box">
+           <a href="#" class="nav-link">  
+             <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+             CLIENT MANAGEMENT
+           </a>
+         </li>
+         <li class="nav-item mt-2 text-box">
+           <a href="#" class="nav-link">
+             <svg class="bi me-2" width="10" height="16"><use xlink:href="#grid"/></svg>
+             CERTIFICATE MANAGEMENT
+           </a>
+         </li>
+         <li class="nav-item mt-2 text-box">
+          <a href="#" class="nav-link">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+            LOGS & HISTORY
+          </a>
+        </li>
+       </ul>
+       <hr>
+       <div class="dropdown">
+         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+           <strong>Gwapo</strong>
+         </a>
+         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+           <li><a class="dropdown-item" href="#">New Client...</a></li>
+           <li><a class="dropdown-item" href="#">Settings</a></li>
+           <li><a class="dropdown-item" href="#">Profile</a></li>
+           <li><hr class="dropdown-divider"></li>
+           <li><a class="dropdown-item" href="#">Sign out</a></li>
+         </ul>
+       </div>
+     </div>
+
+     <div class="flex-grow-1 p-4">
+       <!-- main content here -->
+     </div>
+   </div>
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>
