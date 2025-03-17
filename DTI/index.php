@@ -18,7 +18,7 @@
                 <div class="login-container">
                     <div class="login-header">
                         <h2 class="text-primary" style="font-weight: 700;">DTI <br> E-CERTIFICATION <br> SYSTEM</h2>
-                        <p class="text-white">Welcome to DTI</p>
+                        <p class="text-black">Welcome to DTI</p>
                     </div>
                     
                     <form>
@@ -30,13 +30,10 @@
                         <div class="form-floating mb-3 position-relative">
                             <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
                             <label for="floatingPassword">Password</label>
-                            <span class="password-toggle" onclick="togglePassword()">
-                                <i class="bi bi-eye" id="toggleIcon"></i>
-                            </span>
                         </div>
 
                         <div class="d-flex justify-content-between mb-3">
-                            <a href="#" class="text-primary">Forgot password?</a>
+                            <a href="#" class="text-primary" style="text-decoration: none;">Forgot password?</a>
                         </div>
                         
                         <div class="d-grid">
