@@ -1,138 +1,70 @@
 body {
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    background-color: rgb(252, 251, 255);
-  }
-  
-  html {
-    height: -webkit-fill-available;
-  }
-  
-  main {
+    background-color: #01043A;
+    background-image: url('https://source.unsplash.com/random/1920x1080/?blue');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    height: 100vh;
     display: flex;
-    flex-wrap: nowrap;
-    height: 100vh;
-    max-height: 100vh;
-    overflow-x: auto;
-    overflow-y: hidden;
-    color: rgb(255, 255, 255);
-    
-  }
-  
-
-  .nav-link {
-    color: rgb(255, 255, 255);
-    font-size: 16px;
-    font-weight: 500;
-
-  }
-  
-  .b-example-divider {
-    flex-shrink: 0;
-    width: 1.5rem;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, .1);
-    border: solid rgba(0, 0, 0, .15);
-    border-width: 1px 0;
-    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-  }
-
-  
-  
-  .bi {
-    vertical-align: -.125em;
-    pointer-events: none;
-    fill: currentColor;
-  }
-  
-  .dropdown-toggle { outline: 0; }
-  
-  .nav-flush .nav-link {
-    border-radius: 0;
-  }
-  
-  .btn-toggle {
-    display: inline-flex;
     align-items: center;
-    padding: .25rem .5rem;
-    font-weight: 600;
-    color: rgba(0, 0, 0, .65);
-    background-color: transparent;
-    border: 0;
-  }
-  .btn-toggle:hover,
-  .btn-toggle:focus {
-    color: rgba(0, 0, 0, .85);
-    background-color: #d2f4ea;
-  }
-  
-  .btn-toggle::before {
-    width: 1.25em;
-    line-height: 0;
-    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
-    transition: transform .35s ease;
-    transform-origin: .5em 50%;
-  }
-  
-  .btn-toggle[aria-expanded="true"] {
-    color: rgba(0, 0, 0, .85);
-  }
-  .btn-toggle[aria-expanded="true"]::before {
-    transform: rotate(90deg);
-  }
-  
-  .btn-toggle-nav a {
-    display: inline-flex;
-    padding: .1875rem .5rem;
-    margin-top: .125rem;
-    margin-left: 1.25rem;
-    text-decoration: none;
-  }
-  .btn-toggle-nav a:hover,
-  .btn-toggle-nav a:focus {
-    background-color: #d2f4ea;
-  }
-  
-  .scrollarea {
-    overflow-y: auto;
-  }
-  
-  .fw-semibold { font-weight: 600; }
-  .lh-tight { line-height: 1.25; }
+    justify-content: center;
+    background: url('img/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    
+}
 
+.login-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
 
-      .sidebar-header {
-        position: relative;
-      }
-      .close-btn {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        font-size: 20px;
-        transform: translateY(-50%);
-        background: transparent;
-        border: none; 
-        color: #ffffff;
-        padding: 5px;
-        cursor: pointer;
-      }
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
 
-      .text-box {
-        border: 2px solid #000;
-        padding: 1px 10px;
-        border-radius: 5px;
-        display: inline-block;
-        background-color: rgba(255, 255, 255, 0.2); 
-    }
+/* Slider Container */
+.slider-container {
+    width: 150%;
+    max-width: 600px;
+    height: 600px; /* Adjust the height as needed */
+    overflow: hidden;
+    position: relative;
+}
 
-   
-    .text-box-shadow {
-        border: 2px solid #000;
-        padding: 8px 15px;
-        border-radius: 5px;
-        display: inline-block;
-        background-color: #fff;
-        box-shadow: 4px 4px 0px #000;
-    }
-  
-  
+/* Image Slider */
+.image-slider {
+    display: flex;
+    flex-direction: column;
+    animation: verticalScroll 50s linear infinite;
+    margin-bottom: 10px;
+}
+
+.image-slider img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    
+}
+
+/* Infinite Scrolling Animation */
+@keyframes verticalScroll {
+    0% { transform: translateY(0%); }
+    100% { transform: translateY(-100%); }
+}
+
+/* Duplicate Images for Smooth Loop */
+.image-slider::after {
+    content: "";
+    display: block;
+    height: 100%;
+    background: url('img/cert.png') no-repeat center center / cover;
+}
