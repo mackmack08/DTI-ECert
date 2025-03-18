@@ -4,7 +4,7 @@
     background-color: #01043a;
     color: white;
     text-align: center;
-    line-height: normal; 
+    line-height: normal;
     padding-top: 40px;
     font-family: 'Poppins', sans-serif;
     position: relative;
@@ -13,7 +13,8 @@
 .nav-right {
     position: absolute;
     top: 40px;
-    right: 20px; 
+    right: 150px;
+    z-index: 1000; 
 }
 
 .nav-right .nav-link {
@@ -27,6 +28,11 @@
     background-color: #282A50;
     border-radius: 8px;
     padding: 5px 0;
+    position: absolute; 
+    top: 40px; 
+    left: 0; 
+    z-index: 999; 
+    min-width: max-content; 
 }
 
 .nav-right .sub-menu a {
@@ -62,14 +68,13 @@
 }
 
 .sidebar .nav-link .icon {
-    font-size: 28px; 
-    transition: transform 0.2s; 
+    font-size: 28px;
+    transition: transform 0.2s;
 }
 
 .sidebar .nav-link .icon:hover {
-    transform: scale(1.2); 
+    transform: scale(1.2);
 }
-
 
 .sidebar.collapsed {
     width: 60px;
@@ -94,20 +99,20 @@
 }
 
 .sidebar .nav-link:first-child {
-    margin-top: 75px; 
+    margin-top: 75px;
 }
 
 .nav-right .nav-link .icon {
     display: inline-block;
-    width: 50px; 
-    height: 50px; 
+    width: 50px;
+    height: 50px;
     text-align: center;
     line-height: 50px;
-    border-radius: 50%; 
+    border-radius: 50%;
 }
 
 .nav-right .nav-link .icon i {
-    font-size: 36px; 
+    font-size: 36px;
 }
 
 @media (max-width: 768px) {
