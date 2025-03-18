@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -14,8 +14,9 @@
                 <div class="col-md-6 d-flex align-items-center justify-content-center">
                     <div class="login-container">
                         <div class="login-header">
-                            <h2 class="text-dark" style="font-weight: 700;">DTI <br> E-CERTIFICATION <br> SYSTEM</h2>
-                            <p class="text-black">Welcome to DTI</p>
+                            <br>
+                            <h1 class="text-white fw-bold" style="text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8); font-weight: 1000px" >DTI <br> E-CERTIFICATION <br> SYSTEM</h1> <br>
+                        <p class="text-white" style="text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); font-weight: 1000px" >Welcome Back, Administrator! </p>
                         </div>
                         
                         <form>
@@ -29,16 +30,18 @@
                                 <label for="floatingPassword">Password</label>
                             </div>
 
-                            <div class="d-flex justify-content-between mb-3">
-                                <a href="#" class="text-primary" style="text-decoration: none;">Forgot password?</a>
-                            </div>
+                            <div class="d-flex justify-content-end mb-3">
+                                 <a href="#" class="text-white" style="text-decoration: none; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); font-size: 10px;">Forgot password?</a>
+                            </div> <br>
+
                             
-                            <div class="form-group">
-                                    <button  style="background-color: #01043A;" type="submit" name="signup_btn" class="btn btn-primary">Login</button>
-                                </div>
-                            <div class="text-center mt-3">
-                                <p>Don't have an account? <a href="signup.php" class="text-black">Sign up</a></p>
+                            <div class="form-group text-center">
+                                <button type="submit" name="signup_btn" class="btn custom-login-btn">Login</button>
                             </div>
+                            <div class="text-center mt-3">
+                                <p class="small-text">Don't have an account? <a href="signup.php" class="text-white signup-link">Sign up</a></p>
+                            </div>
+
                         </form>
                     </div>
                 </div>
@@ -47,82 +50,18 @@
                 <div class="col-md-6 d-flex align-items-center justify-content-center">
                     <div class="slider-container">
                         <div class="image-slider">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-                            <img src="img/cert.png" alt="Certificate">
-
+                            <img src="img/SampleCertificate.png" alt="Certificate">
+                            <img src="img/SampleCertificate.png" alt="Certificate">
+                            <img src="img/SampleCertificate.png" alt="Certificate">
+                            <img src="img/SampleCertificate.png" alt="Certificate">
+                            <img src="img/SampleCertificate.png" alt="Certificate">
+                            <img src="img/SampleCertificate.png" alt="Certificate">
+                            
                         </div>
                         
                     </div>
                 </div>
-                <img style="z-index: -2; position: absolute; width: 100%; height: 110%; border-radius: 50%; margin-left: -70%;" src="img/bg.jpg" alt="">
+                <img style="z-index: -2; position: absolute; width: 100%; height: 110%;" src="img/DTI-BACKGROUND.png" alt="">
         <div class="container vh-100 d-flex align-items-center">
             <div class="row w-100">
 
