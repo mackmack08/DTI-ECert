@@ -1,26 +1,20 @@
 body {
     background-color: #01043A;
-    background-image: url('https://source.unsplash.com/random/1920x1080/?blue');
-    background-size: cover;
     background-position: center;
     background-blend-mode: overlay;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url('img/bg.jpg') no-repeat center center fixed;
-    background-size: cover;
     
 }
 
 .login-container {
-    background: rgba(255, 255, 255, 0.9);
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 100%;
     max-width: 400px;
-    text-align: center;
+    text-align: left    ;
 }
 
 .password-toggle {
@@ -31,11 +25,13 @@ body {
     cursor: pointer;
 }
 
+
+
 /* Slider Container */
 .slider-container {
     width: 150%;
     max-width: 600px;
-    height: 600px; /* Adjust the height as needed */
+    height: 600px;
     overflow: hidden;
     position: relative;
 }
@@ -44,14 +40,14 @@ body {
 .image-slider {
     display: flex;
     flex-direction: column;
-    animation: verticalScroll 50s linear infinite;
-    margin-bottom: 10px;
+    animation: verticalScroll 150s linear infinite;
+    gap: 20px;
 }
 
-.image-slider img {
-    width: 100%;
+.image-slider img { 
+    width: 80%;
     height: auto;
-    border-radius: 10px;
+    border-radius: 15px;
     
 }
 
@@ -61,7 +57,6 @@ body {
     100% { transform: translateY(-100%); }
 }
 
-/* Duplicate Images for Smooth Loop */
 .image-slider::after {
     content: "";
     display: block;
