@@ -26,6 +26,9 @@
                 </a>
         
                 <a class="nav-link" href="#">
+                    <span class="icon">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </span>
                     <span class="description">Logout</span>
                 </a>
             </div>
