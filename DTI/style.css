@@ -1,0 +1,76 @@
+body {
+    background-color: #01043A;
+    background-position: center;
+    background-blend-mode: overlay;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.login-container {
+    padding: 30px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    text-align: left    ;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.background_image {
+    z-index: -2;
+    position: absolute;
+    width: 100%;
+    height: 105%;
+    border-radius: 0 60% 60% 0;
+    margin-left: -50%;
+    opacity: 0.5; 
+    filter: hue-rotate(110deg); 
+}
+
+
+
+/* Slider Container */
+.slider-container {
+    width: 150%;
+    max-width: 600px;
+    height: 600px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Image Slider */
+.image-slider {
+    display: flex;
+    flex-direction: column;
+    animation: verticalScroll 150s linear infinite;
+    gap: 20px;
+}
+
+.image-slider img { 
+    width: 80%;
+    height: auto;
+    border-radius: 15px;
+    
+}
+
+/* Infinite Scrolling Animation */
+@keyframes verticalScroll {
+    0% { transform: translateY(0%); }
+    100% { transform: translateY(-100%); }
+}
+
+.image-slider::after {
+    content: "";
+    display: block;
+    height: 10%;
+    background: url('img/cert.png') no-repeat center center / cover;
+}
