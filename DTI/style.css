@@ -26,7 +26,7 @@ html, body {
 /* Make input boxes slightly transparent */
 .form-control {
     background: rgba(255, 255, 255, 0.3); /* 30% transparency */
-    backdrop-filter: blur(5px); /* Soft blur effect */
+    backdrop-filter: blur(4px); /* Soft blur effect */
     border: 1px solid rgba(255, 255, 255, 0.5); /* Subtle border */
     color: white; /* Input text color */
 }
@@ -45,14 +45,14 @@ html, body {
 /* Focus effect */
 .form-control:focus {
     background: rgba(255, 255, 255, 0.4); /* Slightly less transparent on focus */
-    border-color: black !important; /* Change border to black */
+    border-color: #01043A !important; /* Change border to black */
     outline: none; /* Remove default outline */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.8); /* Optional: Adds a soft black glow */
+    box-shadow: 0 0 5px #01043A; /* Optional: Adds a soft black glow */
 }
 
 /* Ensure the border remains black after input */
 .form-control:not(:placeholder-shown) {
-    border-color: black !important;
+    border-color: #01043A !important;
 }
 
 
@@ -79,7 +79,7 @@ html, body {
 
 /* Forgot Password Link - Hover Effect */
 .d-flex.justify-content-end a:hover {
-    color: #4048F1 !important; /* Change to blue */
+    color: #01043A !important; /* Change to blue */
     transform: translateY(-2px); /* Slightly move up */
     text-shadow: 2px 2px 5px rgba(64, 72, 241, 0.6); /* Optional glow */
 }
