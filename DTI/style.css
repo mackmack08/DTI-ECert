@@ -74,13 +74,14 @@ html, body {
 
 /* Hover effect for the "Forgot password?" link */
 .d-flex.justify-content-end a {
-    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Ensure transition works */
 }
 
-/* When hovered, the text will move slightly and change color */
+/* Forgot Password Link - Hover Effect */
 .d-flex.justify-content-end a:hover {
-    transform: translateY(-2px); /* Moves text slightly up */
-    text-shadow: 2px 2px 5px rgba(255, 204, 0, 0.8); /* Adds a glowing effect */
+    color: #4048F1 !important; /* Change to blue */
+    transform: translateY(-2px); /* Slightly move up */
+    text-shadow: 2px 2px 5px rgba(64, 72, 241, 0.6); /* Optional glow */
 }
 
 
@@ -140,7 +141,7 @@ html, body {
     content: "";
     display: block;
     height: 100%;
-    background: url('img/cert.png') no-repeat center center / cover;
+    background: url('img/SampleCertificate.png') no-repeat center center / cover;
 }
 
 .custom-login-btn {
@@ -155,7 +156,7 @@ html, body {
 }
 
 .custom-login-btn:hover {
-    background-color: #4048F1; /* Gold on hover */
+    background-color: #4048F1; 
     color: white;
 }
 
@@ -165,14 +166,25 @@ html, body {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Shadow effect */
 }
 
+.text-center.mt-3 {
+    display: block;
+    text-align: center; /* Ensures text is centered */
+    margin-top: 15px; /* Adjust spacing */
+    transition: transform 0.3s ease-in-out; /* Smooth movement */
+}
+
+.text-center.mt-3:hover {
+    transform: translateY(-2px); /* Moves text slightly up on hover */
+}
+
+/* Sign Up Link - Hover Effect */
 .signup-link {
-    font-weight: bold; /* Makes "Sign up" stand out */
+    font-weight: bold;
     text-decoration: none; /* Removes underline */
     transition: color 0.3s ease-in-out;
-    transform: translateY(-2px); /* Moves text slightly up */
 }
 
 .signup-link:hover {
-    color: #4048F1;
-    transform: translateY(-2px); /* Moves text slightly up */ 
+    color: #4048F1 !important; /* Change to blue */
+    transform: translateY(-2px); /* Slightly move up */
 }
