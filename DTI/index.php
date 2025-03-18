@@ -39,7 +39,9 @@
                                 <button type="submit" name="signup_btn" class="btn custom-login-btn">Login</button>
                             </div>
                             <div class="text-center mt-3">
-                                <p class="small-text">Don't have an account? <a href="signup.php" class="text-white signup-link">Sign up</a></p>
+                                <p class="small-text">Don't have an account? 
+                                 <a href="signup.php" class="text-white signup-link">Sign up</a>
+                                </p>
                             </div>
 
                         </form>
