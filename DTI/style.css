@@ -1,65 +1,113 @@
-body {
-    background-color: #01043A;
-    background-position: center;
-    background-blend-mode: overlay;
-    height: 100vh;
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding-top: 20px;
+    background-color: #01043a;
+    transition: width 0.3s;
+}
+
+.sidebar .nav-link {
+    display: flex;
+    align-items: center;    
+    gap: 20px;
+    padding: 10px 20px;
+    color: #fff;
+}
+
+.sidebar .description {
+    font-size: 16px;
+}
+
+.sidebar .sub-menu:first-of-type {
+    background-color: #282A50;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    margin-top: 5px;
+    padding: 5px 0;
+}
+
+.sidebar .sub-menu:last-of-type {
+    background-color: #282A50;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 5px 0;
+}
+    
+.sidebar .sub-menu a {
     display: flex;
     align-items: center;
-    justify-content: center;
-    
+    padding: 8px 20px;
+    color: #fff;
+    text-decoration: none;
 }
 
-.login-container {
-    padding: 30px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 400px;
-    text-align: left    ;
+.sidebar .sub-menu .icon {
+    font-size: 20px;
 }
 
-.password-toggle {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-}
-
-
-
-/* Slider Container */
-.slider-container {
-    width: 150%;
-    max-width: 600px;
-    height: 600px;
-    overflow: hidden;
-    position: relative;
-}
-
-/* Image Slider */
-.image-slider {
-    display: flex;
-    flex-direction: column;
-    animation: verticalScroll 150s linear infinite;
-    gap: 20px;
-}
-
-.image-slider img { 
-    width: 80%;
-    height: auto;
-    border-radius: 15px;
-    
-}
-
-/* Infinite Scrolling Animation */
-@keyframes verticalScroll {
-    0% { transform: translateY(0%); }
-    100% { transform: translateY(-100%); }
-}
-
-.image-slider::after {
-    content: "";
-    display: block;
+.main-content {
     height: 100%;
-    background: url('img/cert.png') no-repeat center center / cover;
+    margin-left: 275px;
+    padding: 20px;
+}
+
+.sidebar.collapsed {
+    width: 60px;
+}
+
+.sidebar.collapsed .description {
+    display: none;
+}
+
+.sidebar.collapsed .nav-link {
+    justify-content: center;
+}
+
+.main-content {
+    margin-left: 60px;
+}
+
+#sidebarToggle {
+    position: absolute;
+    top: 20px;
+    right: 11px;
+    z-index: 999;
+    background-color: #01043a;
+    border: none;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 250px;
+    }
+
+    .main-content {
+        margin-left: 250px;
+    }
+
+    #sidebarToggle {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 60px;
+    }
+
+    .sidebar .description {
+        display: none;
+    }
+
+    .sidebar .nav-link {
+        justify-content: center;
+    }
+
+    .main-content {
+        margin-left: 60px;
+    }
 }
