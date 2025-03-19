@@ -58,7 +58,14 @@ html, body {
     border-radius: 10px;
     width: 100%;
     max-width:500px;
-    text-align: left    ;
+    text-align: left;
+    margin-left: -40px; 
+}
+
+/* Adjust row layout to align with opposite side */
+.custom-row {
+    display: flex;
+    justify-content: space-between; /* Ensures proper alignment */
 }
 
 .password-toggle {
@@ -89,6 +96,7 @@ html, body {
     height: 1000px;
     overflow: hidden;
     position: relative;
+    margin-right: -40px; /* Adjust this value as needed */
 }
 
 /* Image Slider */
