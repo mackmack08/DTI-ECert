@@ -34,7 +34,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end mb-3">
-                             <a href="#" class="text-white" style="text-decoration: none; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); font-size: 10px;">Forgot password?</a>
+                            <a href="password_reset.php" class="text-white" style="text-decoration: none; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); font-size: 10px;">Forgot password?</a>
                         </div> <br>
                        
                         <div class="form-group text-center">
@@ -67,21 +67,6 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const certificateColumn = document.getElementById("certificateColumn");
-
-        function scrollCertificates() {
-            certificateColumn.scrollBy({
-                top: certificateColumn.clientHeight, // Scroll by one full container height
-                behavior: "smooth"
-            });
-        }
-
-        // Attach event listeners to sign-up and login links
-        document.querySelector(".signup-link")?.addEventListener("click", scrollCertificates);
-        document.querySelector(".login-link")?.addEventListener("click", scrollCertificates);
-    });
-    </script>
+    
 </body>
 </html>
