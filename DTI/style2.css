@@ -1,3 +1,9 @@
+/* Basic body styling */
+body {
+    border: 3px solid black;
+}
+
+/* Header styling */
 .header {
     width: 100%;
     height: 120px;
@@ -10,13 +16,15 @@
     position: relative;
 }
 
+/* Right side navigation section */
 .nav-right {
     position: absolute;
-    top: 32px;
+    top: 40px;
     right: 50px;
-    z-index: 1000; 
+    z-index: 1000;
 }
 
+/* Styling for links inside the submenu */
 .nav-right .nav-link {
     display: flex;
     align-items: center;
@@ -24,17 +32,19 @@
     color: #fff;
 }
 
+/* Submenu styling */
 .nav-right .sub-menu {
-    background-color: #282A50;
+    background-color: #01043A; /* Dark blue background */
     border-radius: 8px;
     padding: 5px 0;
-    position: absolute; 
-    top: 50px; 
-    right: 0;  
-    z-index: 999; 
-    min-width: max-content; 
+    position: absolute;
+    top: 88px;
+    right: 0;
+    z-index: 999;
+    min-width: max-content;
 }
 
+/* Styling for each submenu link */
 .nav-right .sub-menu a {
     display: flex;
     align-items: center;
@@ -43,9 +53,28 @@
     text-decoration: none;
 }
 
+/* Styling for the "Logout" button (last child) */
+.nav-right .sub-menu a:last-child {
+    background-color: #282A50; /* Dark blue background */
+    color: white; /* Text color */
+    text-align: center; /* Center text */
+    display: block; /* Ensure full width */
+    padding: 5px 10px; /* Padding for spacing */
+    border-radius: 8px; /* Rounded edges */
+    font-size: 12px;
+    margin: 15px; /* Add some spacing */
+}
+
+/* Hover effect for the "Logout" button */
+.nav-right .sub-menu a:last-child:hover {
+    background-color: #1a1f53; /* Slightly darker on hover */
+    transform: scale(1.05); /* Subtle scaling effect */
+}
+
+/* Sidebar styling */
 .sidebar {
     position: fixed;
-    top: 25px;
+    top: 0px;
     left: 0;
     height: 100%;
     width: 380px;
@@ -53,8 +82,10 @@
     background-color: #01043a;
     transition: width 0.3s;
     padding-right: 20px;
+    border: 3px solid black;
 }
 
+/* Sidebar link styling */
 .sidebar .nav-link {
     display: flex;
     align-items: center;
@@ -63,35 +94,55 @@
     color: #fff;
 }
 
+/* Description styling */
 .sidebar .description {
+    position: relative;
+    top: 40px;
+    left: 0;
     font-size: 16px;
 }
 
+/* Icon styling */
 .sidebar .nav-link .icon {
+    position: relative;
+    top: 40px;
+    left: -5px;
     font-size: 28px;
     transition: transform 0.2s;
 }
 
+/* Hover effect for icons */
 .sidebar .nav-link .icon:hover {
     transform: scale(1.2);
 }
 
+/* Collapsed sidebar styling */
 .sidebar.collapsed {
     width: 60px;
 }
 
+/* Hide descriptions in collapsed sidebar */
 .sidebar.collapsed .description {
     display: none;
 }
 
+/* Center align links when collapsed */
 .sidebar.collapsed .nav-link {
     justify-content: center;
 }
 
+/* Hover effect for sidebar links and submenu items */
+.sidebar .nav-link:hover,
+.nav-right .sub-menu a:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Sidebar toggle button styling */
 #sidebarToggle {
     position: absolute;
-    top: 2px;
-    right: 20px;
+    top: 28px;
+    right: 2px;
     z-index: 999;
     background-color: #01043a;
     border: none;
@@ -99,14 +150,17 @@
     transition: background-color 0.3s ease;
 }
 
+/* Hover effect for sidebar toggle */
 #sidebarToggle:hover {
-    background-color: #1a1f53; 
+    background-color: #1a1f53;
 }
 
+/* Sidebar first link offset */
 .sidebar .nav-link:first-child {
     margin-top: 75px;
 }
 
+/* Icon styling for profile icon in the nav-right section */
 .nav-right .nav-link .icon {
     display: inline-block;
     width: 50px;
@@ -118,13 +172,15 @@
 }
 
 .nav-right .nav-link .icon i {
-    font-size: 36px;
+    font-size: 50px;
 }
 
+/* Hover effect for profile icon */
 .nav-right .nav-link .icon:hover {
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
 
+/* Responsive design for smaller screen sizes */
 @media (max-width: 768px) {
     .sidebar {
         width: 250px;
@@ -152,3 +208,24 @@
         justify-content: center;
     }
 }
+
+/* Mini rectangle below the sidebar */
+.mini-rectangle {
+    width: 375px;
+    height: 10px;
+    background-color: #DD0000;
+    position: absolute;
+    top: 122px;
+    left: 0px;
+    transition: width 0.3s ease-in-out;
+}
+
+/* Styling for mini-rectangle in collapsed state */
+.sidebar.collapsed .mini-rectangle {
+    width:110px;
+    left: 0px;
+    transform: translateX(-50%);
+}
+
+
+
