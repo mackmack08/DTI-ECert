@@ -63,21 +63,5 @@
     </div>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"> <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const certificateColumn = document.getElementById("certificateColumn");
-
-        function scrollCertificates() {
-            certificateColumn.scrollBy({
-                top: certificateColumn.clientHeight, // Scroll by one full container height
-                behavior: "smooth"
-            });
-        }
-
-        // Attach event listeners to sign-up and login links
-        document.querySelector(".signup-link")?.addEventListener("click", scrollCertificates);
-        document.querySelector(".login-link")?.addEventListener("click", scrollCertificates);
-    });
-</script>
 </body>
 </html>
