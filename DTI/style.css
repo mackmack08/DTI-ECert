@@ -2,7 +2,7 @@ html, body {
     overflow: hidden; /* Prevent scrolling */
     height: 100vh; /* Full viewport height */
     width: 100vw; /* Full viewport width */
-    margin: 0;
+    margin: 0px;
     padding: 0;
     display: flex;
     align-items: center;
@@ -12,9 +12,9 @@ html, body {
 .login-header h1 {
     font-size: 3rem; /* Adjust size as needed */
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
-    font-weight: 900; /* Make it bolder */
-    line-height: 1.0; /* Adjust line spacing */
-    text-align: left; /* Center the text */
+    font-weight: 800; /* Make it bolder */
+    line-height: 1.2; /* Adjust line spacing */
+    text-align: left; 
 }
 
 /* Adjust the paragraph below it */
@@ -23,38 +23,35 @@ html, body {
     font-weight: 700;
 }
 
-/* Make input boxes slightly transparent */
+/* Improved input field readability */
 .form-control {
-    background: rgba(255, 255, 255, 0.3); /* 30% transparency */
-    backdrop-filter: blur(4px); /* Soft blur effect */
-    border: 1px solid rgba(255, 255, 255, 0.5); /* Subtle border */
-    color: white; /* Input text color */
+    background: rgba(255, 255, 255, 0.6); /* Less transparency for better visibility */
+    backdrop-filter: blur(8px); /* Slightly stronger blur */
+    border: 2px solid rgba(255, 255, 255, 0.7); /* More visible border */
+    color: #000; /* Changed to black for better contrast */
+    font-size: 1rem; /* Increased font size */
+    padding: 12px; /* More padding for easier typing */
 }
 
-/* Placeholder and label text visibility */
+/* Placeholder and label text readability */
 .form-control::placeholder,
 .form-floating label {
-    color: rgba(255, 255, 255, 0.8); /* Light white for better readability */
+    color: rgba(0, 0, 0, 0.7); /* Darker text for better contrast */
+    font-weight: 600; /* Slightly bolder text */
 }
 
-/* Ensure input text is always white */
-.form-control {
-    color: white !important;
-}
-
-/* Focus effect */
+/* Focus effect for better visibility */
 .form-control:focus {
-    background: rgba(255, 255, 255, 0.4); /* Slightly less transparent on focus */
-    border-color: #01043A !important; /* Change border to black */
-    outline: none; /* Remove default outline */
-    box-shadow: 0 0 5px #01043A; /* Optional: Adds a soft black glow */
+    background: rgba(255, 255, 255, 0.8); /* Even less transparency when focused */
+    border-color: #01043A !important; /* DTI theme color */
+    outline: none;
+    box-shadow: 0 0 8px #01043A; /* Stronger glow for focus */
 }
 
-/* Ensure the border remains black after input */
+/* Keep border color black when text is entered */
 .form-control:not(:placeholder-shown) {
     border-color: #01043A !important;
 }
-
 
 .login-container {
     padding: 30px;
@@ -79,37 +76,16 @@ html, body {
 
 /* Forgot Password Link - Hover Effect */
 .d-flex.justify-content-end a:hover {
-    color: #01043A !important; /* Change to blue */
+    color: #4048F1 !important; /* Change to blue */
     transform: translateY(-2px); /* Slightly move up */
     text-shadow: 2px 2px 5px rgba(64, 72, 241, 0.6); /* Optional glow */
 }
 
 
-
 /* Slider Container */
 .slider-container {
-    width: 150%;
-    max-width: 700px;
-    height: 600px;
-    overflow: hidden;
-    position: relative;
-
-}
-
-
-/* Slider Container */
-.slider-container {
-    width: 150%;
-    max-width: 700px;
-    height: 600px;
-    overflow: hidden;
-    position: relative;
-}
-
-/* Slider Container */
-.slider-container {
-    width: 150%;
-    max-width: 700px;
+    width: 100%;
+    max-width: 1000px;
     height: 1000px;
     overflow: hidden;
     position: relative;
@@ -125,7 +101,7 @@ html, body {
 
 /* Duplicate images to create seamless scrolling */
 .image-slider img { 
-    width: 90%;
+    width: 100%;
     height: auto;
     border-radius: 15px;
 }
