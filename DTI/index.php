@@ -22,7 +22,7 @@
                         <p class="text-white" style="text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); font-weight: 1000px">Welcome Back, Administrator!</p>
                     </div>
                    
-                    <form>
+                    <form action="dashboard.php" method="POST">
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" required>
                             <label for="floatingEmail">Email Address</label>
@@ -38,7 +38,7 @@
                         </div> <br>
                        
                         <div class="form-group text-center">
-                            <button type="submit" name="signup_btn" class="btn custom-login-btn">Login</button>
+                            <button type="submit" name="login_btn" class="btn custom-login-btn">Login</button>
                         </div>
                         <div class="text-center mt-3">
                             <p class="small-text">Don't have an account?
@@ -66,7 +66,8 @@
     </div>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"><script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
     document.addEventListener("DOMContentLoaded", function () {
         const certificateColumn = document.getElementById("certificateColumn");
 
@@ -81,6 +82,6 @@
         document.querySelector(".signup-link")?.addEventListener("click", scrollCertificates);
         document.querySelector(".login-link")?.addEventListener("click", scrollCertificates);
     });
-</script>
+    </script>
 </body>
 </html>
