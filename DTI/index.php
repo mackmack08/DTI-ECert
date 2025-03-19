@@ -18,7 +18,7 @@
                 <div class="login-container">
                     <div class="login-header">
                         <br>
-                        <h1 class="text-white fw-bold" style="text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8); font-weight: 1000px" >DTI <br> E-CERTIFICATION <br> SYSTEM</h1> <br>
+                        <h1 class="text-white fw-bold" >DTI <br> E-CERTIFICATION <br> SYSTEM</h1> <br>
                     <p class="text-white" style="text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); font-weight: 1000px" >Welcome Back, Administrator! </p>
                     </div>
                     
