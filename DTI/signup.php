@@ -20,7 +20,7 @@ function sendemail_verify($email, $verify_token) {
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            // Enable implicit TLS encryption
     $mail->Port       = 587;
 
-    $mail->setFrom('idontplayinvoker@gmail.com');
+    $mail->setFrom('idontplayinvoker@gmail.com', 'DTI-Cebu Provincial');
     $mail->addAddress($email);
  
     $mail->isHTML(true);                                  // Set email format to HTML
@@ -188,8 +188,7 @@ if(isset($_POST['signup_btn'])) {
                     
                 </div>
             </div>
-            <img style="z-index: -2; position: absolute; width: 100%; height: 110%; border-radius: 50%; margin-left: -70%;" src="img/bg.jpg" alt="">
-    <div class="container vh-100 d-flex align-items-center">
+            <img style="z-index: -2; position: absolute; width: 100%; height: 110%;" src="img/DTI-BACKGROUND.png" alt="">
         <div class="row w-100">
 
         </div>
