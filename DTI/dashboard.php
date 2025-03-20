@@ -11,7 +11,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style2.css?v=<?php echo time(); ?>">
     <!-- Dashboard Specific CSS -->
-    <link rel="stylesheet" href="dashboard-styles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="style3.css?v=<?php echo time(); ?>">
 </head>
 <body>
     <!-- Header Section -->
