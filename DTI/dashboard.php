@@ -97,7 +97,7 @@
     </div>
 
     <!-- Main Content Area -->
-    <div class="main-content">
+    <div class="main-content" style="margin-top: 120px;">
         <h2>Welcome to DTI E-Certification System</h2>
         <p>This is your dashboard. Navigate using the sidebar menu.</p>
         
