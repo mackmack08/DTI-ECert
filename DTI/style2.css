@@ -56,13 +56,21 @@ body::before {
 /* Make the profile icon in the header bigger */
 .nav-right .nav-link {
     color: white;
-    font-size: 1.8rem; /* Increased from 1.5rem to 1.8rem */
+    font-size: 1.8rem; /* Keep this size */
     padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .nav-right .nav-link .icon {
-    font-size: 1.9rem; /* Ensure the icon is also bigger */
-    min-width: 40px; /* Slightly wider to accommodate larger icon */
+    font-size: 2.2rem; /* Increased from 1.9rem to 2.2rem */
+    min-width: 40px; /* Keep the same width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(1.15); /* Scale up the icon without affecting layout */
+    transform-origin: center;
 }
 
 .sub-menu {
@@ -120,7 +128,7 @@ body::before {
     background-color: #01043A;
     border-bottom: 0;
     transition: padding var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
-    height: 98px; /* Fixed height to ensure consistent spacing */
+    height: 110px; /* Fixed height to ensure consistent spacing */
 }
 
 /* Logo container and text styling */
@@ -133,7 +141,7 @@ body::before {
 
 .dti-logo {
     height: 40px;
-    margin-left: 10px; /* Add margin to separate logo from text */
+    margin-left: 8px; /* Add margin to separate logo from text */
     transition: opacity var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
                 transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -175,7 +183,7 @@ body::before {
     background-color: var(--primary-color);
     position: absolute;
     width: 100%; /* Full width */
-    top: 98px; /* Position it at the bottom of the header */
+    top: 105px; /* Position it at the bottom of the header */
     left: 0;
     margin: 0; /* Remove margin */
     border-radius: 0; /* Remove rounded edges */
@@ -191,7 +199,7 @@ body::before {
 
 /* For the sidebar nav container, add some padding */
 .sidebar .nav.flex-column {
-    padding-top: 45px; /* Increased padding to account for the divider */
+    padding-top: 50px; /* Increased padding to account for the divider */
     padding-bottom: 10px;
     /* Add padding to ensure consistent spacing */
     padding-left: 15px;
