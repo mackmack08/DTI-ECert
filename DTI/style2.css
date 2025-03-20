@@ -1,277 +1,398 @@
-/* Basic body styling */
-body {
-    border: 3px solid black;
+:root {
+    --primary-color: #CF0A2C;
+    --secondary-color: #0038A8;
+    --sidebar-width: 280px; /* Increased from 250px to 280px */
+    --sidebar-collapsed-width: 70px;
+    --transition-speed: 0.5s; /* Increased for smoother animation */
 }
 
-/* Header styling */
-.header {
-    width: 100%;
-    height: 120px;
-    background-color: #01043a;
-    color: white;
-    text-align: center;
-    line-height: normal;
-    padding-top: 40px;
-    font-family: 'Poppins', sans-serif;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
     position: relative;
 }
 
-/* Right side navigation section */
-.nav-right {
-    position: absolute;
-    top: 40px;
-    right: 50px;
-    z-index: 1000;
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/DTI-BACKGROUND.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    z-index: -1;
 }
 
-/* Styling for links inside the submenu */
-.nav-right .nav-link {
+/* Ensure .header is relative to make bottom positioning work */
+.header {
+    position: fixed;
+    background-color: #01043A;
+    color: white;
+    padding: 15px 20px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    color: #fff;
-}
-
-/* Submenu styling */
-.nav-right .sub-menu {
-    background-color: #01043A; /* Dark blue background */
-    border-radius: 8px;
-    padding: 5px 0;
-    position: absolute;
-    top: 88px;
+    top: 0;
+    left: 0;
     right: 0;
-    z-index: 999;
-    min-width: max-content;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: margin-left var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
 }
 
-/* Styling for each submenu link */
-.nav-right .sub-menu a {
+.header h4 {
+    margin: 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Make the profile icon in the header bigger */
+.nav-right .nav-link {
+    color: white;
+    font-size: 1.8rem; /* Increased from 1.5rem to 1.8rem */
+    padding: 5px;
+}
+
+.nav-right .nav-link .icon {
+    font-size: 1.9rem; /* Ensure the icon is also bigger */
+    min-width: 40px; /* Slightly wider to accommodate larger icon */
+}
+
+.sub-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+    z-index: 101;
+}
+
+.sub-menu .nav-link {
+    color: #333;
+    padding: 10px 15px;
     display: flex;
     align-items: center;
-    padding: 8px 20px;
-    color: #fff;
-    text-decoration: none;
+    transition: background-color 0.2s;
 }
 
-/* Styling for the "Logout" button (last child) */
-.nav-right .sub-menu a:last-child {
-    background-color: #282A50; /* Dark blue background */
-    color: white; /* Text color */
-    text-align: center; /* Center text */
-    display: block; /* Ensure full width */
-    padding: 5px 10px; /* Padding for spacing */
-    border-radius: 8px; /* Rounded edges */
-    font-size: 12px;
-    margin: 15px; /* Add some spacing */
+.sub-menu .nav-link:hover {
+    background-color: #f0f0f0;
 }
 
-/* Hover effect for the "Logout" button */
-.nav-right .sub-menu a:last-child:hover {
-    background-color: #1a1f53; /* Slightly darker on hover */
-    transform: scale(1.05); /* Subtle scaling effect */
-}
-
-/* Sidebar styling */
+/* Sidebar styles */
 .sidebar {
     position: fixed;
-    top: 0px;
+    top: 0;
     left: 0;
     height: 100%;
-    width: 400px;
-    padding-top: 20px;
-    background-color: #01043a;
-    transition: width 0.3s;
-    padding-right: 20px;
-    border: 3px solid black;
+    width: var(--sidebar-width);
+    background-color: white;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 99;
+    transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    padding-top: 70px;
+    overflow-x: hidden;
+    will-change: width; /* Optimizes animation performance */
 }
 
-/* Sidebar link styling */
-.sidebar .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 10px 20px;
-    color: #fff;
-}
-
-/* Sidebar item container */
-.sidebar .nav-link {
-    display: flex;
-    align-items: center;
-    background-color: red;
-    padding: 12px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-bottom: 10px; 
-    margin-left: 10px;
-    position: relative;
-    top: 0px;
-}
-
-/* Icon styling */
-.sidebar .nav-link .icon {
-    font-size: 15px;
-    transition: transform 0.2s;
-}
-
-/* Description styling */
-.sidebar .nav-link .description {
-    font-size: 10px;
-    color: white;
-}
-
-/* Hover effect */
-.sidebar .nav-link:hover {
-    background-color: darkred;
-    transform: scale(1.05);
-}
-
-/* Hover effect for icons */
-.sidebar .nav-link .icon:hover {
-    transform: scale(1.2);
-}
-
-/* Collapsed sidebar styling */
 .sidebar.collapsed {
-    width: 80px;
+    width: var(--sidebar-collapsed-width);
 }
 
-/* Hide descriptions in collapsed sidebar */
-.sidebar.collapsed .description {
-    display: none;
-}
-
-/* Center align links when collapsed */
-.sidebar.collapsed .nav-link {
-    justify-content: center;
-}
-
-/* Hover effect for sidebar links and submenu items */
-.sidebar .nav-link:hover,
-.nav-right .sub-menu a:hover {
-    transform: scale(1.1);
-    transition: transform 0.2s ease-in-out;
-}
-
-/* Sidebar toggle button styling */
-#sidebarToggle {
-    position: absolute;
-    top: 28px;
-    right: 11px;
-    z-index: 999;
-    background-color: #01043a;
-    border: none;
-    color: white;
-    transition: background-color 0.3s ease;
-}
-
-/* Hover effect for sidebar toggle */
-#sidebarToggle:hover {
-    background-color: #1a1f53;
-}
-
-/* Sidebar first link offset */
-.sidebar .nav-link:first-child {
-    margin-top: 75px;
-}
-
-/* Icon styling for profile icon in the nav-right section */
-.nav-right .nav-link .icon {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    line-height: 50px;
-    border-radius: 50%;
-    transition: background-color 0.3s ease;
-}
-
-.nav-right .nav-link .icon i {
-    font-size: 50px;
-}
-
-/* Hover effect for profile icon */
-.nav-right .nav-link .icon:hover {
-    transform: scale(1.1);
-}
-
-/* Responsive design for smaller screen sizes */
-@media (max-width: 768px) {
-    .sidebar {
-        width: 250px;
-    }
-
-    .main-content {
-        margin-left: 250px;
-    }
-
-    #sidebarToggle {
-        display: block;
-    }
-}
-
-@media (max-width: 480px) {
-    .sidebar {
-        width: 60px;
-    }
-
-    .sidebar .description {
-        display: none;
-    }
-
-    .sidebar .nav-link {
-        justify-content: center;
-    }
-}
-
-/* Mini rectangle below the sidebar */
-.mini-rectangle {
-    width: 395px;
-    height: 10px;
-    background-color: #DD0000;
-    position: absolute;
-    top: 122px;
-    left: 0px;
-    transition: width 0.1s ease-in-out;
-}
-
-/* Styling for mini-rectangle in collapsed state */
-.sidebar.collapsed .mini-rectangle {
-    width:150px;
-    left: 0px;
-    transform: translateX(-50%);
-}
-
-/* Add these styles to your existing style2.css file */
-
+/* Adjust sidebar header padding for better alignment */
 .sidebar-header {
     display: flex;
     align-items: center;
-    padding: 0px;
+    padding: 15px 15px; /* Adjusted padding for better alignment */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #01043A;
+    border-bottom: 0;
+    transition: padding var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    height: 98px; /* Fixed height to ensure consistent spacing */
 }
 
+/* Logo container and text styling */
 .logo-container {
-    margin-left: 20px;
+    display: flex;
+    align-items: center;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: opacity var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dti-logo {
-    height: 70px;
-    width: auto;
+    height: 40px;
+    margin-left: 10px; /* Add margin to separate logo from text */
+    transition: opacity var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
+                transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* When sidebar is collapsed, hide the logo */
-.sidebar.collapsed .logo-container {
-    width: 0;
-    margin-left: 0;
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    line-height: 1.1;
+    transition: opacity var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
+                transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    margin-left:15px;
+}
+
+.logo-text-top {
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin-right: 3px;
+}
+
+.logo-text-bottom {
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin-right: 3px;
+}
+
+/* Hide logo text when sidebar is collapsed */
+.sidebar.collapsed .logo-text {
     opacity: 0;
+    transform: translateX(-20px);
+    display: none;
 }
 
-/* When sidebar is expanded, show the logo */
-.sidebar:not(.collapsed) .logo-container {
-    width: auto;
+/* Red divider line at the bottom of the sidebar header */
+.mini-rectangle {
+    height: 5px; /* Increased height for visibility */
+    background-color: var(--primary-color);
+    position: absolute;
+    width: 100%; /* Full width */
+    top: 98px; /* Position it at the bottom of the header */
+    left: 0;
+    margin: 0; /* Remove margin */
+    border-radius: 0; /* Remove rounded edges */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+    z-index: 1; /* Ensure it's above other elements */
+    transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Adjust the divider when sidebar is collapsed */
+.sidebar.collapsed .mini-rectangle {
+    width: 100%; /* Keep full width when collapsed */
+}
+
+/* For the sidebar nav container, add some padding */
+.sidebar .nav.flex-column {
+    padding-top: 45px; /* Increased padding to account for the divider */
+    padding-bottom: 10px;
+    /* Add padding to ensure consistent spacing */
+    padding-left: 15px;
+    padding-right: 15px;
+    transition: padding var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+/* Adjust padding when sidebar is collapsed */
+.sidebar.collapsed .nav.flex-column {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#sidebarToggle {
+    background-color: transparent;
+    border: none;
+    color: white; /* Changed to white to be visible on dark header */
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 10px;
+    margin-left: 5px; /* Add left margin to align with nav items */
+}
+
+/* Create a wrapper for the toggle icon to align with nav icons */
+#sidebarToggle i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px; /* Same width as the icons in nav items */
+    height: 25px; /* Same height for consistency */
+}
+
+.sidebar.collapsed .sidebar-header {
+    justify-content: center; /* Center the header content when collapsed */
+    padding: 15px 0; /* Center the toggle button when collapsed */
+}
+
+.sidebar.collapsed #sidebarToggle {
+    margin-right: 0px; /* Center the toggle button when collapsed */
+    margin-left:20px; /* Center the toggle button when collapsed */
+}
+
+#sidebarToggle:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.sidebar.collapsed .dti-logo {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+/* Navigation links */
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 10px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 8px 0; /* Equal top and bottom margin, no left/right margin */
+    border-radius: 5px;
+    position: relative;
+    width: 100%; /* Make buttons take full width of container */
+    overflow: hidden;
+    font-size: 0.95rem; /* Slightly smaller font to fit longer text */
+}
+
+.nav-link:hover {
+    background-color: rgba(207, 10, 44, 0.1);
+    transform: translateY(-3px);
+}
+
+.nav-link.active {
+    background-color: rgba(207, 10, 44, 0.1);
+    color: #01043A;
+}
+
+.icon {
+    font-size: 1.2rem;
+    margin-right: 20px;
+    min-width: 25px;
+    display: flex;
+    justify-content: center;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, margin-right, font-size; /* Optimizes animation */
+}
+
+/* Center icons when sidebar is collapsed */
+.sidebar.collapsed .nav-link {
+    justify-content: center;
+    padding: 12px 0;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar.collapsed .icon {
+    margin-right: 0;
+    font-size: 1.4rem; /* Slightly larger icons when collapsed */
+    transform: translateX(0); /* Reset any transform */
+}
+
+.description {
+    white-space: nowrap;
     opacity: 1;
+    transition: opacity var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
+                transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(0);
+    will-change: opacity, transform; /* Optimizes animation */
+    position: relative; /* For better animation control */
+    max-width: 200px; /* Ensure text doesn't overflow */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Improved animation for text when collapsing */
+.sidebar.collapsed .description {
+    opacity: 0;
+    transform: translateX(20px);
+    position: absolute; /* Prevent layout shifts during animation */
+    pointer-events: none; /* Prevent interaction during fade-out */
+}
+
+/* Remove the custom margin from the first button */
+.nav-link.custom-btn {
+    position: relative;
+    margin-left: 0; /* Reset the negative margin */
+}
+
+/* Main content area */
+.main-content {
+    margin-left: var(--sidebar-width);
+    margin-top: 70
+}
+
+/* Updated breadcrumb styles to match the theme */
+.breadcrumb {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.breadcrumb-item {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: var(--primary-color);
+    content: "/";
+    padding: 0 0.5rem;
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+.breadcrumb-item.active {
+    color: white;
+    font-weight: 600;
+}
+
+.breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.breadcrumb-item a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+/* Add underline effect on hover */
+.breadcrumb-item a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.2s ease;
+}
+
+.breadcrumb-item a:hover::after {
+    width: 100%;
+}
+
+/* Add icon to home link */
+.breadcrumb-item:first-child a::before {
+    content: "\F425"; /* Bootstrap icon for home */
+    font-family: "bootstrap-icons";
+    margin-right: 5px;
+    font-size: 0.9rem;
+    position: relative;
+    top: 1px;
 }
 
 
