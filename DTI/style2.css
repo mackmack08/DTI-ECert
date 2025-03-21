@@ -171,6 +171,40 @@ body::before {
     background-color: #01043A;
 }
 
+/* Admin info styling in submenu */
+.admin-info {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.admin-info .icon {
+    font-size: 1.8rem;
+    margin-right: 15px;
+    min-width: 25px;
+    display: flex;
+    justify-content: center;
+    color: #01043A;
+}
+
+.admin-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #01043A;
+    margin-bottom: 2px;
+}
+
+.admin-role {
+    font-size: 0.8rem;
+    color: #6c757d;
+    font-weight: 500;
+}
 
 /* Adjust sidebar to work with fixed header */
 .sidebar {
