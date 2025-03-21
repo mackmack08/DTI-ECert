@@ -33,20 +33,29 @@
                 </span>
             </a>
             <div class="sub-menu collapse" id="submenu">
-                <!-- Submenu item for "Administrator" -->
-                <a class="nav-link" href="#">
-                    <span class="icon">
-                        <i class="bi bi-person-circle"></i>
-                    </span>
-                    <span class="description">Administrator</span>
-                </a>
-                <!-- Submenu item for "Logout" -->
-                <a class="nav-link" href="index.php">
-                    <span class="icon">
-                        <i class="bi bi-box-arrow-right"></i>
-                    </span>
-                    <span class="description">LOGOUT</span>
-                </a>
-            </div>
+    <!-- Display admin name instead of a button -->
+    <div class="admin-info">
+        <span class="icon">
+            <i class="bi bi-person-circle"></i>
+        </span>
+        <div class="admin-details">
+            <span class="admin-name">
+                <?php 
+                    // Check if session is started and username is set
+                    session_start();
+                    echo isset($_SESSION['username']) ? $_SESSION['username'] : 'Administrator'; 
+                ?>
+            </span>
+            <span class="admin-role">Administrator</span>
+        </div>
+    </div>
+    <!-- Submenu item for "Logout" -->
+    <a class="nav-link" href="index.php">
+        <span class="icon">
+            <i class="bi bi-box-arrow-right"></i>
+        </span>
+        <span class="description">LOGOUT</span>
+    </a>
+</div>
         </div>
     </header>
