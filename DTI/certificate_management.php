@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -137,74 +138,93 @@
             }
         }
     </style>
-</head>
-<body>
+    </head>
+    <body>
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <select class="form-select w-auto">
-            <option selected>Certificate Type</option>
-            <option>Business Permit</option>
-            <option>Tax Clearance</option>
-        </select>
-        <div class="input-group w-25">
-            <input type="text" class="form-control" placeholder="Search Certificate Name">
-            <button class="btn btn-outline-secondary"><i class="fas fa-search"></i></button>
+
+    <?php
+    // Set page-specific variables
+    $pageTitle = "DTI Certificate Management";
+    $currentPage = "Certificate Management";
+
+    // Include additional CSS if needed
+    $additionalCSS = '
+        <!-- Any additional CSS specific to this page -->
+    ';
+
+    // Include the header
+    include('header.php');
+
+    // Include the sidebar
+    include('sidebar.php');
+    ?>
+
+    <div class="main-content" style="margin-top: 120px;">
+        <div class="container mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <select class="form-select w-auto">
+                    <option selected>Certificate Type</option>
+                    <option>Business Permit</option>
+                    <option>Tax Clearance</option>
+                </select>
+                <div class="input-group w-25">
+                    <input type="text" class="form-control" placeholder="Search Certificate Name">
+                    <button class="btn btn-outline-secondary"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <!-- Add Certificate Card -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="certificate-card">
+                        <div class="add-certificate">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div>
+                            <h5>Certificate Name</h5>
+                            <button class="btn btn-dark btn-sm" id="addCertificateBtn">
+                                <i class="fas fa-plus"></i> Add Certificate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificate Cards -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="certificate-card">
+                        <img src="img/cert2.png" alt="Certificate">
+                        <div>
+                            <h5>Business Permit</h5>
+                            <button class="btn btn-dark btn-sm view-certificate-btn" data-cert-name="Business Permit" data-cert-date="2023-05-15" data-cert-id="1">
+                                <i class="fas fa-eye"></i> View Certificate
+                            </button>
+                            <button class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="certificate-card">
+                        <img src="img/cert2.png" alt="Certificate">
+                        <div>
+                            <h5>Tax Clearance</h5>
+                            <button class="btn btn-dark btn-sm view-certificate-btn" data-cert-name="Tax Clearance" data-cert-date="2023-06-20" data-cert-id="2">
+                                <i class="fas fa-eye"></i> View Certificate
+                            </button>
+                            <button class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="row g-3">
-        <!-- Add Certificate Card -->
-        <div class="col-md-6 col-lg-4">
-            <div class="certificate-card">
-                <div class="add-certificate">
-                    <i class="fas fa-plus"></i>
-                </div>
-                <div>
-                    <h5>Certificate Name</h5>
-                    <button class="btn btn-dark btn-sm" id="addCertificateBtn">
-                        <i class="fas fa-plus"></i> Add Certificate
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Certificate Cards -->
-        <div class="col-md-6 col-lg-4">
-            <div class="certificate-card">
-                <img src="img/cert2.png" alt="Certificate">
-                <div>
-                    <h5>Business Permit</h5>
-                    <button class="btn btn-dark btn-sm view-certificate-btn" data-cert-name="Business Permit" data-cert-date="2023-05-15" data-cert-id="1">
-                        <i class="fas fa-eye"></i> View Certificate
-                    </button>
-                    <button class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-            <div class="certificate-card">
-                <img src="img/cert2.png" alt="Certificate">
-                <div>
-                    <h5>Tax Clearance</h5>
-                    <button class="btn btn-dark btn-sm view-certificate-btn" data-cert-name="Tax Clearance" data-cert-date="2023-06-20" data-cert-id="2">
-                        <i class="fas fa-eye"></i> View Certificate
-                    </button>
-                    <button class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- View Certificate Modal -->
 <div class="modal fade" id="viewCertificateModal" tabindex="-1" aria-labelledby="viewCertificateModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl-custom">
+    <div class="modal-dialog modal-xl-custom" style="max-width: 1200px; width: 100%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="viewCertificateModalLabel">Certificate Details</h5>
@@ -281,5 +301,17 @@
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <?php
+    // Add page-specific scripts if needed
+    $additionalScripts = '
+        <!-- Any additional scripts specific to this page -->
+        <script>
+            // Client management specific JavaScript
+        </script>
+    ';
+
+    // Include the footer
+    include('footer.php');
+    ?>
 </body>
 </html>
