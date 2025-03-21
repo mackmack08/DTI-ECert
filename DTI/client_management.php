@@ -35,6 +35,7 @@
         .modal-header {
             background-color: #f8f9fa;
             border-bottom: 1px solid #dee2e6;
+            width: 100%;
         }
         .modal-footer {
             background-color: #f8f9fa;
@@ -42,8 +43,8 @@
         }
         /* Custom large modal */
         .modal-xl-custom {
-            max-width: 90%;
-            width: 1200px;
+            max-width: 10%;
+            width: 2000px;
         }
         .modal-content {
             height: 90vh;
@@ -161,50 +162,70 @@
     </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <div class="table-responsive">
-            <table id="clientTable" class="table table-striped table-bordered">
-                <thead class="table-primary">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name of the Client</th>
-                        <th>Gender</th>
-                        <th>Age</th>
-                        <th>Client Type</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>John Doe</td>
-                        <td>Male</td>
-                        <td>30</td>
-                        <td>Premium</td>
-                        <td>
-                            <button class="btn btn-success btn-sm view-info-btn" data-id="1">View Info</button>
-                            <button class="btn btn-danger btn-sm">Remove Client</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jane Smith</td>
-                        <td>Female</td>
-                        <td>28</td>
-                        <td>Regular</td>
-                        <td>
-                            <button class="btn btn-success btn-sm view-info-btn" data-id="2">View Info</button>
-                            <button class="btn btn-danger btn-sm">Remove Client</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+
+    <?php
+    // Set page-specific variables
+    $pageTitle = "DTI Dashboard";
+    $currentPage = "Client Management";
+
+    // Include additional CSS if needed
+    $additionalCSS = '
+        <!-- Any additional CSS specific to this page -->
+    ';
+
+    // Include the header
+    include('header.php');
+
+    // Include the sidebar
+    include('sidebar.php');
+    ?>
+
+    <div class="main-content" style="margin-top: 120px;">
+        <div class="container mt-4">
+            <div class="table-responsive">
+                <table id="clientTable" class="table table-striped table-bordered">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name of the Client</th>
+                            <th>Gender</th>
+                            <th>Age</th>
+                            <th>Client Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>John Doe</td>
+                            <td>Male</td>
+                            <td>30</td>
+                            <td>Premium</td>
+                            <td>
+                                <button class="btn btn-success btn-sm view-info-btn" data-id="1">View Info</button>
+                                <button class="btn btn-danger btn-sm">Remove Client</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Jane Smith</td>
+                            <td>Female</td>
+                            <td>28</td>
+                            <td>Regular</td>
+                            <td>
+                                <button class="btn btn-success btn-sm view-info-btn" data-id="2">View Info</button>
+                                <button class="btn btn-danger btn-sm">Remove Client</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <!-- Add Client Modal -->
     <div class="modal fade" id="addClientModal" tabindex="-1" aria-labelledby="addClientModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl-custom">
+        <div class="modal-dialog modal-xl-custom" style="max-width: 1200px; width: 100%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addClientModalLabel">Add New Client</h5>
@@ -328,7 +349,7 @@
     
     <!-- View Client Info Modal -->
     <div class="modal fade" id="viewClientModal" tabindex="-1" aria-labelledby="viewClientModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl-custom">
+        <div class="modal-dialog modal-xl-custom" style="max-width: 1200px; width: 100%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="viewClientModalLabel">Client Information</h5>
@@ -654,5 +675,17 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <?php
+    // Add page-specific scripts if needed
+    $additionalScripts = '
+        <!-- Any additional scripts specific to this page -->
+        <script>
+            // Client management specific JavaScript
+        </script>
+    ';
+
+    // Include the footer
+    include('footer.php');
+    ?>
 </body>
 </html>
