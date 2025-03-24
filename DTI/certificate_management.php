@@ -23,6 +23,8 @@
         height: 100%;
         background-color: #ffffff;
         border: none;
+        display: flex;
+        flex-direction: column;
     }
    
     .certificate-card:hover {
@@ -32,6 +34,9 @@
    
     .certificate-card .card-body {
         padding: 1.5rem;
+        flex: 1; /* This makes the card body take up remaining space */
+        display: flex;
+        flex-direction: column;
     }
    
     .certificate-card .card-title {
@@ -376,20 +381,20 @@
         text-align: center;
     }
    
-    /* Certificate image */
     .certificate-image {
-        width: 100%;
-        height: auto;
-        max-height: 150px;
-        object-fit: cover;
-        border-radius: 8px 8px 0 0;
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+    pointer-events: none; /* Makes the image non-clickable */
+    display: block; /* Ensures the image is a block element */
     }
-   
     /* Action buttons container */
     .action-buttons {
         display: flex;
         justify-content: flex-end;
         gap: 8px;
+        margin-top: auto; /* This pushes the buttons to the bottom */
     }
    
     /* Responsive adjustments */
@@ -453,8 +458,10 @@ include('sidebar.php');
     <!-- Certificate Card 1 -->
     <div class="col certificate-item">
         <div class="card certificate-card">
+             <!-- Add this image section at the top of each card -->
+        <img src="img/SampleCertificate.png" class="certificate-image" alt="Certificate Preview">
             <div class="card-body">
-                <h5 class="card-title">Business Permit</h5>
+                <h5 class="card-title">Certificate Name</h5>
                 <p class="card-text">Official document that authorizes a business to operate within a specific jurisdiction.</p>
                 <div class="certificate-date mb-3">
                     <i class="far fa-calendar-alt me-1"></i> Uploaded on May 15, 2023
@@ -489,8 +496,10 @@ include('sidebar.php');
     <!-- Certificate Card 2 -->
     <div class="col certificate-item">
         <div class="card certificate-card">
+             <!-- Add this image section at the top of each card -->
+        <img src="img/SampleCertificate.png" class="certificate-image" alt="Certificate Preview">
             <div class="card-body">
-                <h5 class="card-title">Tax Clearance</h5>
+                <h5 class="card-title">Certificate Name</h5>
                 <p class="card-text">Document certifying that a business has paid all required taxes and has no outstanding tax liabilities.</p>
                 <div class="certificate-date mb-3">
                     <i class="far fa-calendar-alt me-1"></i> Uploaded on June 20, 2023
@@ -525,8 +534,10 @@ include('sidebar.php');
     <!-- Certificate Card 3 -->
     <div class="col certificate-item">
         <div class="card certificate-card">
+             <!-- Add this image section at the top of each card -->
+        <img src="img/SampleCertificate.png" class="certificate-image" alt="Certificate Preview">
             <div class="card-body">
-                <h5 class="card-title">DTI Registration</h5>
+                <h5 class="card-title">Certificate Name</h5>
                 <p class="card-text">Certificate of business name registration issued by the Department of Trade and Industry.</p>
                 <div class="certificate-date mb-3">
                     <i class="far fa-calendar-alt me-1"></i> Uploaded on July 10, 2023
@@ -561,8 +572,10 @@ include('sidebar.php');
     <!-- Certificate Card 4 -->
     <div class="col certificate-item">
         <div class="card certificate-card">
+             <!-- Add this image section at the top of each card -->
+        <img src="img/SampleCertificate.png" class="certificate-image" alt="Certificate Preview">
             <div class="card-body">
-                <h5 class="card-title">Export License</h5>
+                <h5 class="card-title">Certificate Name</h5>
                 <p class="card-text">Official permit allowing businesses to export specific goods to international markets.</p>
                 <div class="certificate-date mb-3">
                     <i class="far fa-calendar-alt me-1"></i> Uploaded on August 5, 2023
@@ -597,8 +610,10 @@ include('sidebar.php');
     <!-- Certificate Card 5 -->
     <div class="col certificate-item">
         <div class="card certificate-card">
+             <!-- Add this image section at the top of each card -->
+        <img src="img/SampleCertificate.png" class="certificate-image" alt="Certificate Preview">
             <div class="card-body">
-                <h5 class="card-title">Import License</h5>
+                <h5 class="card-title">Certificate Name</h5>
                 <p class="card-text">Legal authorization for businesses to import regulated goods from foreign countries.</p>
                 <div class="certificate-date mb-3">
                     <i class="far fa-calendar-alt me-1"></i> Uploaded on September 12, 2023
@@ -1053,4 +1068,3 @@ include('footer.php');
 ?>
 </body>
 </html>
-
