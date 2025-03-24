@@ -3,11 +3,6 @@
 $pageTitle = "DTI Dashboard";
 $currentPage = "Dashboard";
 
-// Include additional CSS if needed
-$additionalCSS = '
-    <!-- Any additional CSS specific to this page -->
-';
-
 // Include the header
 include('header.php');
 
@@ -18,11 +13,11 @@ include('sidebar.php');
 <!-- Main Content Area -->
 <div class="main-content" style="margin-top: 120px;">
     <h2>Welcome to DTI E-Certification System</h2>
-    <p>This is your dashboard. Navigate using the sidebar menu.</p>
-    
-    <!-- Top 4 Dashboard Cards -->
+    <p>Your one-stop dashboard for managing certificates and clients.</p>
+   
+    <!-- Key Numbers Section -->
     <div class="row mb-4">
-        <!-- Certificate Issued Card -->
+        <!-- Total Certificates Card -->
         <div class="col-md-3 col-sm-6 mb-3">
             <div class="dashboard-card">
                 <div class="card-icon bg-primary">
@@ -30,12 +25,12 @@ include('sidebar.php');
                 </div>
                 <div class="card-content">
                     <h3 class="counter">0</h3>
-                    <p>Certificates Issued</p>
+                    <p>Total Certificates</p>
                 </div>
             </div>
         </div>
-        
-        <!-- Certificates Pending Card -->
+       
+        <!-- Waiting for Approval Card -->
         <div class="col-md-3 col-sm-6 mb-3">
             <div class="dashboard-card">
                 <div class="card-icon bg-warning">
@@ -43,25 +38,25 @@ include('sidebar.php');
                 </div>
                 <div class="card-content">
                     <h3 class="counter">0</h3>
-                    <p>Certificates Pending</p>
+                    <p>Waiting for Approval</p>
                 </div>
             </div>
         </div>
-        
-        <!-- Registered Clients Card -->
+       
+        <!-- Active Clients Card -->
         <div class="col-md-3 col-sm-6 mb-3">
             <div class="dashboard-card">
                 <div class="card-icon bg-success">
                     <i class="bi bi-people"></i>
                 </div>
                 <div class="card-content">
-                    <h3 class="counter">0</h3>
-                    <p>Registered Clients</p>
+                    <h3 class="counter">2</h3>
+                    <p>Active Clients</p>
                 </div>
             </div>
         </div>
-        
-        <!-- Expired Certificates Card -->
+       
+        <!-- Certificates About to Expire Card -->
         <div class="col-md-3 col-sm-6 mb-3">
             <div class="dashboard-card">
                 <div class="card-icon bg-danger">
@@ -69,41 +64,41 @@ include('sidebar.php');
                 </div>
                 <div class="card-content">
                     <h3 class="counter">0</h3>
-                    <p>Expired Certificates</p>
+                    <p>About to Expire</p>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Daily and Weekly Dashboard Cards -->
+   
+    <!-- Recent Activity and Weekly Summary -->
     <div class="row mb-4">
-        <!-- Daily Statistics Card -->
+        <!-- Today's Activity -->
         <div class="col-md-6 mb-3">
             <div class="dashboard-chart-card">
                 <div class="chart-header">
-                    <h4><i class="bi bi-calendar-day"></i> Daily Statistics</h4>
+                    <h4><i class="bi bi-calendar-day"></i> Today's Activity</h4>
                 </div>
                 <div class="chart-body">
                     <canvas id="dailyChart"></canvas>
                 </div>
                 <div class="chart-footer">
                     <div class="stat-item">
-                        <span class="stat-label">Issued Today:</span>
+                        <span class="stat-label">Approved Today:</span>
                         <span class="stat-value">0</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Pending Today:</span>
+                        <span class="stat-label">New Requests:</span>
                         <span class="stat-value">0</span>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Weekly Statistics Card -->
+       
+        <!-- This Week's Summary -->
         <div class="col-md-6 mb-3">
             <div class="dashboard-chart-card">
                 <div class="chart-header">
-                    <h4><i class="bi bi-calendar-week"></i> Weekly Statistics</h4>
+                    <h4><i class="bi bi-calendar-week"></i> This Week's Summary</h4>
                 </div>
                 <div class="chart-body">
                     <canvas id="weeklyChart"></canvas>
@@ -122,13 +117,13 @@ include('sidebar.php');
         </div>
     </div>
 
-    <!-- Monthly and Yearly Dashboard Cards -->
+    <!-- Monthly Trends and Yearly Overview -->
     <div class="row">
-        <!-- Monthly Statistics Card -->
+        <!-- Monthly Trends -->
         <div class="col-md-6 mb-3">
             <div class="dashboard-chart-card">
                 <div class="chart-header">
-                    <h4><i class="bi bi-calendar-month"></i> Monthly Statistics</h4>
+                    <h4><i class="bi bi-calendar-month"></i> Monthly Trends</h4>
                 </div>
                 <div class="chart-body">
                     <canvas id="monthlyChart"></canvas>
@@ -145,12 +140,12 @@ include('sidebar.php');
                 </div>
             </div>
         </div>
-        
-        <!-- Yearly Statistics Card -->
+       
+        <!-- Yearly Overview -->
         <div class="col-md-6 mb-3">
             <div class="dashboard-chart-card">
                 <div class="chart-header">
-                    <h4><i class="bi bi-calendar4"></i> Yearly Statistics</h4>
+                    <h4><i class="bi bi-calendar4"></i> Yearly Overview</h4>
                 </div>
                 <div class="chart-body">
                     <canvas id="yearlyChart"></canvas>
@@ -161,8 +156,8 @@ include('sidebar.php');
                         <span class="stat-value">0</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Last Year:</span>
-                        <span class="stat-value">0</span>
+                        <span class="stat-label">System Status:</span>
+                        <span class="stat-value">Ready</span>
                     </div>
                 </div>
             </div>
@@ -170,190 +165,146 @@ include('sidebar.php');
     </div>
 </div>
 
-    <?php $additionalScripts = '<script src="https://cdn.jsdelivr.net/npm/chart.js"></scrip>'; ?>   
-    <script>
-    // Function to initialize all charts
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Function to initialize all charts
 function initializeCharts() {
-    console.log("Initializing charts...");
+    // Make sure Chart.js is loaded
+    if (typeof Chart === 'undefined') {
+        console.error('Chart.js is not loaded');
+        return;
+    }
+   
+    // Set Chart.js defaults for better display
+    Chart.defaults.font.family = "'Poppins', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
+    Chart.defaults.font.size = 12;
     
-    // Check if canvas elements exist
-    console.log("Daily chart canvas:", document.getElementById('dailyChart'));
-    console.log("Weekly chart canvas:", document.getElementById('weeklyChart'));
-    console.log("Monthly chart canvas:", document.getElementById('monthlyChart'));
-    console.log("Yearly chart canvas:", document.getElementById('yearlyChart'));
-
-    // Daily Chart
-    const dailyCtx = document.getElementById('dailyChart').getContext('2d');
-    const dailyChart = new Chart(dailyCtx, {
-        type: 'bar',
-        data: {
-            labels: ['8AM', '10AM', '12PM', '2PM', '4PM', '6PM'],
-            datasets: [{
-                label: 'Certificates Issued',
-                data: [5, 12, 8, 3, 10, 7], // Test data instead of zeros
-                backgroundColor: '#0038A8',
-                borderColor: '#0038A8',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        precision: 0
-                    }
-                }
+    // Daily Chart - Empty chart ready for data
+    const dailyCtx = document.getElementById('dailyChart');
+    if (dailyCtx) {
+        const dailyChart = new Chart(dailyCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Morning', 'Noon', 'Afternoon', 'Evening'],
+                datasets: [{
+                    label: 'Certificates Processed',
+                    data: [0, 0, 0, 0],
+                    backgroundColor: '#0038A8',
+                    borderColor: '#0038A8',
+                    borderWidth: 1
+                }]
             },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ': ' + context.parsed.y;
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
                         }
                     }
                 }
             }
-        }
-    });
+        });
+    }
 
-    // Weekly Chart
-    const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
-    const weeklyChart = new Chart(weeklyCtx, {
-        type: 'line',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-                label: 'Certificates Issued',
-                data: [8, 15, 12, 20, 18, 10, 5], // Test data instead of zeros
-                backgroundColor: 'rgba(207, 10, 44, 0.2)',
-                borderColor: '#CF0A2C',
-                borderWidth: 2,
-                tension: 0.3,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        precision: 0
-                    }
-                }
+    // Weekly Chart - Empty chart ready for data
+    const weeklyCtx = document.getElementById('weeklyChart');
+    if (weeklyCtx) {
+        const weeklyChart = new Chart(weeklyCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                datasets: [{
+                    label: 'Certificates Processed',
+                    data: [0, 0, 0, 0, 0],
+                    backgroundColor: 'rgba(207, 10, 44, 0.2)',
+                    borderColor: '#CF0A2C',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true
+                }]
             },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ': ' + context.parsed.y;
-                        }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: 5 // Set a small max value to make the chart look better when empty
                     }
                 }
             }
-        }
-    });
+        });
+    }
 
-    // Monthly Chart
-    const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
-    const monthlyChart = new Chart(monthlyCtx, {
-        type: 'bar',
-        data: {
-            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-            datasets: [{
-                label: 'Certificates Issued',
-                data: [25, 40, 35, 30], // Test data instead of zeros
-                backgroundColor: '#28A745',
-                borderColor: '#28A745',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        precision: 0
-                    }
-                }
+    // Monthly Chart - Empty chart ready for data
+    const monthlyCtx = document.getElementById('monthlyChart');
+    if (monthlyCtx) {
+        const monthlyChart = new Chart(monthlyCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Certificates Processed',
+                    data: [0, 0, 0, 0],
+                    backgroundColor: '#28A745',
+                    borderColor: '#28A745',
+                    borderWidth: 1
+                }]
             },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ': ' + context.parsed.y;
-                        }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: 5 // Set a small max value to make the chart look better when empty
                     }
                 }
             }
-        }
-    });
+        });
+    }
 
-    // Yearly Chart
-    const yearlyCtx = document.getElementById('yearlyChart').getContext('2d');
-    const yearlyChart = new Chart(yearlyCtx, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            datasets: [{
-                label: 'Certificates Issued',
-                data: [65, 80, 90, 75, 110, 95, 85, 100, 120, 105, 95, 115], // Test data instead of zeros
-                backgroundColor: 'rgba(0, 56, 168, 0.2)',
-                borderColor: '#0038A8',
-                borderWidth: 2,
-                tension: 0.3,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        precision: 0
-                    }
-                }
+    // Yearly Chart - Empty chart ready for data
+    const yearlyCtx = document.getElementById('yearlyChart');
+    if (yearlyCtx) {
+        const yearlyChart = new Chart(yearlyCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Certificates Processed',
+                    data: [0, 0, 0, 0, 0, 0],
+                    backgroundColor: 'rgba(0, 56, 168, 0.2)',
+                    borderColor: '#0038A8',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true
+                }]
             },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ': ' + context.parsed.y;
-                        }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: 5 // Set a small max value to make the chart look better when empty
                     }
                 }
             }
-        }
-    });
-    
-    console.log("Charts initialized!");
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Your existing code...
-    
     console.log("DOM loaded, initializing charts...");
-    initializeCharts(); // Make sure this line is present
+    initializeCharts();
 });
-    </script>
-;
-<?php
-// Add page-specific scripts if needed
-$additionalScripts = '
-    <!-- Any additional scripts specific to this page -->
-    <script>
-        // Client management specific JavaScript
-    </script>
-';
+</script>
 
+<?php
 // Include the footer
 include('footer.php');
 ?>
