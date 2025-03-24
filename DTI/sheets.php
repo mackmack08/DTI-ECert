@@ -364,7 +364,7 @@
 <?php
 // Set page-specific variables
 $pageTitle = "DTI Sheet Management";
-$currentPage = "Sheet Management";
+$currentPage = "Sheets";
 
 // Include additional CSS if needed
 $additionalCSS = '
