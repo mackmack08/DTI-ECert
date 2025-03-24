@@ -377,7 +377,7 @@ include('sidebar.php');
                     <span class="input-group-text bg-white border-end-0">
                         <i class="fas fa-search text-muted"></i>
                     </span>
-                    <input type="text" class="form-control search-input border-start-0" placeholder="Search clients by name, email, or contact...">
+                    <input type="text" class="form-control search-input border-start-0" placeholder="Search Client's Name">
                 </div>
             </div>
         </div>
