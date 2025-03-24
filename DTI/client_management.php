@@ -111,56 +111,60 @@
         margin-right: 8px;
     }
     
-    /* Button Styles */
-    .btn-primary-custom {
-        background-color: #0d1b57;
-        border-color: #0d1b57;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 6px;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-primary-custom:hover {
-        background-color: #162a78;
-        border-color: #162a78;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(13, 27, 87, 0.3);
-        color: white;
-    }
-    
-    .btn-warning-custom {
-        background-color: #ffc107;
-        border-color: #ffc107;
-        color: #212529;
-        padding: 8px 16px;
-        border-radius: 6px;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-warning-custom:hover {
-        background-color: #e0a800;
-        border-color: #d39e00;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
-    }
-    
-    .btn-danger-custom {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 6px;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-danger-custom:hover {
-        background-color: #c82333;
-        border-color: #bd2130;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
-    }
-    
+/* View button - Blue */
+.btn-primary-custom {
+    background-color: #0d1b57 !important;
+    border-color: #0d1b57 !important;
+    color: white !important;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary-custom:hover {
+    background-color: #162a78; /* Slightly lighter blue on hover */
+    border-color: #162a78;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(13, 27, 87, 0.3);
+    color: white;
+}
+
+/* Edit button - Yellow */
+.btn-warning-custom {
+    background-color: #ffc107 !important;
+    border-color: #ffc107 !important;
+    color: #212529 !important; /* Dark text for contrast */
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.btn-warning-custom:hover {
+    background-color: #e0a800; /* Darker yellow on hover */
+    border-color: #d39e00;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+    color: #212529;
+}
+
+/* Delete button - Red */
+.btn-danger-custom {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: white !important;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.btn-danger-custom:hover {
+    background-color: #c82333; /* Darker red on hover */
+    border-color: #bd2130;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+    color: white;
+}
+   
     .btn-action {
         padding: 6px 10px;
         font-size: 14px;
