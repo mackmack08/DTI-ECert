@@ -20,6 +20,8 @@
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        table-layout: fixed; /* This ensures equal column widths */
+        width: 100%;
     }
     
     .client-table .table {
@@ -31,15 +33,21 @@
         color: #0d1b57;
         font-weight: 600;
         border: none;
-        padding: 15px;
+        padding: 15px 10px;
         text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     
     .client-table td {
         vertical-align: middle;
-        padding: 15px;
+        padding: 15px 180px;
         border-color: #e9ecef;
         text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     
     .client-table tbody tr {
@@ -55,6 +63,8 @@
     font-weight: 600;
     color: #0d1b57;
     text-align: left;
+    white-space: normal;
+    overflow: visible;
     }
     
     .client-table .client-email {
@@ -62,6 +72,8 @@
     color: #6c757d;
     font-size: 14px;
     text-align: left;
+    white-space: normal;
+    overflow: visible;
     }
     
     .client-type-badge {
@@ -166,8 +178,8 @@
 }
    
     .btn-action {
-        padding: 6px 10px;
-        font-size: 14px;
+        padding: 6px 8px;
+        font-size: 13px;
     }
     
     /* Search Container Styles */
@@ -324,10 +336,10 @@
         }
     }
     
-    @media (max-width: 767px) {
-        .client-table {
-            overflow-x: auto;
-        }
+    @media (max-width: 992px) {
+    .client-table {
+        table-layout: auto; /* Revert to auto layout on smaller screens */
+    }
         
         .client-detail-row {
             flex-direction: column;
@@ -384,17 +396,20 @@ include('sidebar.php');
         <!-- Clients Table -->
         <div class="client-table">
             <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th style="width: 30%">Client Name</th>
-                        <th style="width: 15%">Type</th>
-                        <th style="width: 15%">Region</th>
-                        <th style="width: 20%">Contact</th>
-                        <th style="width: 20%" class="action-column">Actions</th>
-                    </tr>
-                </thead>
+            <thead>
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 25%">Client Name</th>
+                    <th style="width: 15%">Type</th>
+                    <th style="width: 15%">Region</th>
+                    <th style="width: 15%">Contact</th>
+                    <th style="width: 20%">Actions</th>
+                </tr>
+            </thead>
+
                 <tbody>
                     <tr>
+                        <td>001</td>
                         <td>
                             <div class="client-name">Juan Dela Cruz</div>
                             <div class="client-email">juan@example.com</div>
@@ -417,6 +432,7 @@ include('sidebar.php');
                         </td>
                     </tr>
                     <tr>
+                        <td>002</td>
                         <td>
                             <div class="client-name">Manila Trading Co.</div>
                             <div class="client-email">info@manilatrading.com</div>
@@ -439,6 +455,7 @@ include('sidebar.php');
                         </td>
                     </tr>
                     <tr>
+                        <td>003</td>
                         <td>
                             <div class="client-name">Department of Agriculture</div>
                             <div class="client-email">info@da.gov.ph</div>
@@ -461,6 +478,7 @@ include('sidebar.php');
                         </td>
                     </tr>
                     <tr>
+                        <td>004</td>
                         <td>
                             <div class="client-name">Maria Reyes</div>
                             <div class="client-email">maria@example.com</div>
@@ -483,6 +501,7 @@ include('sidebar.php');
                         </td>
                     </tr>
                     <tr>
+                        <td>005</td>
                         <td>
                             <div class="client-name">Cebu Enterprises Inc.</div>
                             <div class="client-email">contact@cebuenterprises.com</div>
@@ -505,6 +524,7 @@ include('sidebar.php');
                         </td>
                     </tr>
                     <tr>
+                        <td>006</td>
                         <td>
                             <div class="client-name">Pedro Santos</div>
                             <div class="client-email">pedro@example.com</div>
@@ -527,6 +547,7 @@ include('sidebar.php');
                         </td>
                     </tr>
                     <tr>
+                        <td>007</td>
                         <td>
                             <div class="client-name">Davao City LGU</div>
                             <div class="client-email">info@davaocity.gov.ph</div>
@@ -537,9 +558,13 @@ include('sidebar.php');
                         <td>Region XI</td>
                         <td>(082) 123-4567</td>
                         <td>
-                            <button class="btn btn-primary-custom btn-sm btn-action me-1" data-bs-toggle="modal" data-bs-target="#viewClientModal" data-client-id="7">
+                        <button class="btn btn-primary-custom btn-sm btn-action me-1" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#viewClientModal" 
+                                data-client-id="1"
+                                data-client-unique-id="DTI-C-001">
                                 <i class="fas fa-eye"></i> View
-                            </button>
+                        </button>
                             <button class="btn btn-warning-custom btn-sm btn-action me-1" data-bs-toggle="modal" data-bs-target="#editClientModal" data-client-id="7">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
@@ -589,6 +614,10 @@ include('sidebar.php');
                                 <p class="client-details-subtitle">
                                     <span class="badge bg-primary">Citizen</span>
                                 </p>
+                            </div>
+                            <div class="client-detail-row">
+                                <div class="client-detail-label">Unique ID:</div>
+                                <div class="client-detail-value">DTI-C-001</div>
                             </div>
                             
                             <div class="client-detail-row">
