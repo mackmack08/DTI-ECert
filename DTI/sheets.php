@@ -403,7 +403,7 @@ include('sidebar.php');
     <div class="col sheet-item">
         <div class="card sheet-card">
             <div class="card-body">
-                <h5 class="card-title">Business Registration Data</h5>
+                <h5 class="card-title">Sheet Name</h5>
                 <p class="card-text">Contains business registration information for Q1 2023</p>
                 <div class="sheet-date mb-3">
                     <i class="far fa-calendar-alt me-1"></i> Uploaded on May 15, 2023
@@ -439,7 +439,7 @@ include('sidebar.php');
     <div class="col sheet-item">
         <div class="card sheet-card">
             <div class="card-body">
-                <h5 class="card-title">Tax Clearance Applications</h5>
+                <h5 class="card-title">Sheet Name</h5>
                 <p class="card-text">List of businesses applying for tax clearance certificates</p>
                 <div class="sheet-date mb-3">
                     <i class="far fa-calendar-alt me-1"></i> Uploaded on June 20, 2023
@@ -475,7 +475,7 @@ include('sidebar.php');
     <div class="col sheet-item">
         <div class="card sheet-card">
             <div class="card-body">
-                <h5 class="card-title">DTI Registration Batch</h5>
+                <h5 class="card-title">Sheet Name</h5>
                 <p class="card-text">Batch processing data for DTI registrations in Metro Manila</p>
                 <div class="sheet-date mb-3">
                     <i class="far fa-calendar-alt me-1"></i> Uploaded on July 10, 2023
@@ -511,7 +511,7 @@ include('sidebar.php');
     <div class="col sheet-item">
         <div class="card sheet-card">
             <div class="card-body">
-                <h5 class="card-title">Small Business Permits</h5>
+                <h5 class="card-title">Sheet Name</h5>
                 <p class="card-text">Small business permit applications for Quezon City</p>
                 <div class="sheet-date mb-3">
                     <i class="far fa-calendar-alt me-1"></i> Uploaded on August 5, 2023
@@ -547,7 +547,7 @@ include('sidebar.php');
     <div class="col sheet-item">
         <div class="card sheet-card">
             <div class="card-body">
-                <h5 class="card-title">Export License Data</h5>
+                <h5 class="card-title">Sheet Name</h5>
                 <p class="card-text">Export license applications for agricultural products</p>
                 <div class="sheet-date mb-3">
                     <i class="far fa-calendar-alt me-1"></i> Uploaded on September 12, 2023
@@ -583,7 +583,7 @@ include('sidebar.php');
     <div class="col sheet-item">
         <div class="card sheet-card">
             <div class="card-body">
-                <h5 class="card-title">Import Commodity Data</h5>
+                <h5 class="card-title">Sheet Name</h5>
                 <p class="card-text">Import license applications for essential commodities</p>
                 <div class="sheet-date mb-3">
                     <i class="far fa-calendar-alt me-1"></i> Uploaded on October 8, 2023
