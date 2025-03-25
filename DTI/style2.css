@@ -3,7 +3,7 @@
     --secondary-color: #0038A8;
     --sidebar-width: 280px; /* Increased from 250px to 280px */
     --sidebar-collapsed-width: 70px;
-    --transition-speed: 0.5s; /* Increased for smoother animation */
+    --transition-speed: 0.1s; /* Increased for smoother animation */
 }
 
 body {
@@ -43,9 +43,7 @@ body::before {
     right: 0;
     z-index: 500; /* Increased z-index to ensure it stays above other elements */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    transition
-    
-    : margin-left var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    transition: margin-left var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 
@@ -296,7 +294,7 @@ body::before {
 /* Ensure consistent display when sidebar is collapsed */
 .sidebar.collapsed .logo-text {
     opacity: 0;
-    transform: translateX(-20px);
+    transform: translateX(-10px);
     visibility: hidden; /* Use visibility instead of display for smoother transitions */
     position: absolute; /* Take out of the flow */
 }
@@ -573,4 +571,3 @@ body::before {
     max-width: 800px;
     line-height: 1.6;
 }
-
