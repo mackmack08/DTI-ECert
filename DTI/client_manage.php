@@ -1,5 +1,5 @@
 <?php
-include('dbconn.php'); // Include the database connection file
+include('dbcon.php'); // Include the database connection file
 
 // Retrieve client data from the clients table
 $sql = "SELECT id, client_name, type, region, contact FROM clients";
