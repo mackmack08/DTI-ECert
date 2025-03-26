@@ -7,7 +7,7 @@ if (isset($_POST['login_btn'])) {
 
     // Query to get the user by email
     $query = "SELECT * FROM users WHERE email = ?";
-    $stmt = $con->prepare($query);
+    $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -82,7 +82,7 @@ if (isset($_POST['login_btn'])) {
                                     $user_count = 0;
 
                                     // Count users in the database
-                                    $result = $con->query("SELECT COUNT(*) as user_count FROM users");
+                                    $result = $conn->query("SELECT COUNT(*) as user_count FROM users");
                                 
                                     // Check if query was successful
                                     if ($result) {
