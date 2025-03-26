@@ -66,7 +66,7 @@ if(isset($_POST['signup_btn'])) {
 
     // Check if email already exists
     $check_email = "SELECT email FROM users WHERE email = ?";
-    $stmt_check = $con->prepare($check_email);
+    $stmt_check = $conn->prepare($check_email);
     $stmt_check->bind_param("s", $email);
     $stmt_check->execute();
     $result = $stmt_check->get_result();
@@ -78,7 +78,7 @@ if(isset($_POST['signup_btn'])) {
     }
 
     $insert = "INSERT INTO users (email, password, verify_token) VALUES (?, ?, ?)";
-    $stmt = $con->prepare($insert);
+    $stmt = $conn->prepare($insert);
     $password_hash = password_hash($password, PASSWORD_DEFAULT); // Hash the password before storing
     $stmt->bind_param("sss", $email, $password_hash, $verify_token);
     $query_run = $stmt->execute();
@@ -100,7 +100,7 @@ if(isset($_POST['signup_btn'])) {
         exit();
     } else {
         echo "<script>
-            alert('Registration Failed: " . $con->error . "');
+            alert('Registration Failed: " . $conn->error . "');
             window.location.href = 'signup.php';
         </script>";
         exit();
