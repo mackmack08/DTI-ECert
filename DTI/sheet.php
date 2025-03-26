@@ -69,14 +69,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file_upload'])) {
                
                 // Loop through each row and insert the data into the clients table
                 for ($row = 2; $row <= $highestRow; $row++) { // Assuming row 1 contains headers
-                    $client_name = $sheet->getCell('A' . $row)->getValue();
-                    $type = $sheet->getCell('B' . $row)->getValue();
-                    $region = $sheet->getCell('C' . $row)->getValue();
-                    $contact = $sheet->getCell('D' . $row)->getValue();
+                    $timestamp = $sheet->getCell('A' . $row)->getValue();
+                    $client_name = $sheet->getCell('B' . $row)->getValue();
+                    $client_type = $sheet->getCell('C' . $row)->getValue();
+                    $sex = $sheet->getCell('D' . $row)->getValue();
+                    $age = $sheet->getCell('E' . $row)->getValue();
+                    $region = $sheet->getCell('F' . $row)->getValue();
+                    $contact = $sheet->getCell('G' . $row)->getValue();
+                    $email = $sheet->getCell('H' . $row)->getValue();
+                    $service_ro_objectives_achieved = $sheet->getCell('I' . $row)->getValue();
+                    $service_ro_info_received = $sheet->getCell('J' . $row)->getValue();
+                    $service_ro_relevance_value = $sheet->getCell('K' . $row)->getValue();
+                    $service_ro_duration_sufficient = $sheet->getCell('L' . $row)->getValue();
+                    $service_af_sign_up_access = $sheet->getCell('M' . $row)->getValue();
+                    $service_af_audio_video_sync = $sheet->getCell('N' . $row)->getValue();
+                    $resource_speaker_rq_knowledge = $sheet->getCell('O' . $row)->getValue();
+                    $resource_speaker_rq_clarity = $sheet->getCell('P' . $row)->getValue();
+                    $resource_speaker_rq_engagement = $sheet->getCell('Q' . $row)->getValue();
+                    $resource_speaker_rq_visual_relevance = $sheet->getCell('R' . $row)->getValue();
+                    $resource_speaker_ri_answer_questions = $sheet->getCell('S' . $row)->getValue();
+                    $resource_speaker_ri_chat_responsiveness = $sheet->getCell('T' . $row)->getValue();
+                    $moderator_rr_manage_discussion = $sheet->getCell('U' . $row)->getValue();
+                    $moderator_rr_monitor_raises_questions = $sheet->getCell('V' . $row)->getValue();
+                    $moderator_rr_manage_program = $sheet->getCell('W' . $row)->getValue();
+                    $host_secretariat_rr_technical_assistance = $sheet->getCell('X' . $row)->getValue();
+                    $host_secretariat_rr_admittance_management = $sheet->getCell('Y' . $row)->getValue();
+                    $overall_satisfaction_rating = $sheet->getCell('Z' . $row)->getValue();
+                    $feedback_dissatisfied_reasons = $sheet->getCell('AA' . $row)->getValue();
+                    $feedback_improvement_suggestions = $sheet->getCell('AB' . $row)->getValue();
                    
                     // Insert into clients table
-                    $stmt = $conn->prepare("INSERT INTO clients (client_name, type, region, contact) VALUES (?, ?, ?, ?)");
-                    $stmt->bind_param("ssss", $client_name, $type, $region, $contact);
+                    $stmt = $conn->prepare("INSERT INTO clients (timestamp, client_name, client_type, sex, age, region, contact,
+                    email, service_ro_objectives_achieved, service_ro_info_received, service_ro_relevance_value,
+                    service_ro_duration_sufficient, service_af_sign_up_access, service_af_audio_video_sync, resource_speaker_rq_knowledge,
+                    resource_speaker_rq_clarity, resource_speaker_rq_engagement, resource_speaker_rq_visual_relevance, resource_speaker_ri_answer_questions,
+                    resource_speaker_ri_chat_responsiveness, moderator_rr_manage_discussion, moderator_rr_monitor_raises_questions, moderator_rr_manage_program,
+                    host_secretariat_rr_technical_assistance, host_secretariat_rr_admittance_management, overall_satisfaction_rating,
+                    feedback_dissatisfied_reasons, feedback_improvement_suggestions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+                    $stmt->bind_param("ssssssssssssssssssssssssssss", $timestamp, $client_name, $client_type, $sex, $age, $region, $contact, $email,
+                    $service_ro_objectives_achieved, $service_ro_info_received, $service_ro_relevance_value, $service_ro_duration_sufficient,
+                    $service_af_sign_up_access, $service_af_audio_video_sync, $resource_speaker_rq_knowledge, $resource_speaker_rq_clarity,
+                    $resource_speaker_rq_engagement, $resource_speaker_rq_visual_relevance, $resource_speaker_ri_answer_questions,
+                    $resource_speaker_ri_chat_responsiveness, $moderator_rr_manage_discussion, $moderator_rr_monitor_raises_questions,
+                    $moderator_rr_manage_program, $host_secretariat_rr_technical_assistance, $host_secretariat_rr_admittance_management,
+                    $overall_satisfaction_rating, $feedback_dissatisfied_reasons, $feedback_improvement_suggestions);
                     $stmt->execute();
                 }
             } else {
