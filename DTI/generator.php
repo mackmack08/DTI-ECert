@@ -211,33 +211,12 @@
             flex-wrap: wrap;
         }
 
-        .bold-words-container {
+        .bold-instructions {
             margin-top: 10px;
-        }
-
-        .bold-word-input {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 5px;
-        }
-
-        .bold-word-input input {
-            flex: 1;
-        }
-
-        .add-word-btn {
-            padding: 5px 10px;
-            font-size: 0.8rem;
-        }
-
-        .remove-word-btn {
-            background-color: #dc3545;
-            padding: 5px 10px;
-            font-size: 0.8rem;
-        }
-
-        .remove-word-btn:hover {
-            background-color: #bd2130;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
         }
        
         @media (max-width: 768px) {
@@ -272,8 +251,7 @@
                 </div>
                
                 <div class="form-group">
-                    <label for="nameInput">Recipient Name</label>
-                    <input type="text" id="nameInput" placeholder="Enter recipient's name">
+                    <input type="hidden" id="nameInput" placeholder="Enter recipient's name">
                 </div>
 
                 <div class="text-formatting">
@@ -295,8 +273,7 @@
                             <input type="color" id="textColor" value="#000000">
                         </div>
                         <div class="form-group">
-                            <label for="boldName">Bold Name</label>
-                            <input type="checkbox" id="boldName">
+                            <input type="hidden" id="boldName">
                         </div>
                     </div>
                 </div>
@@ -305,21 +282,13 @@
                     <label for="descriptionInput">Certificate Description</label>
                     <textarea id="descriptionInput" placeholder="Enter certificate description or achievement"></textarea>
                     
-                    <div class="bold-words-container">
-                        <label>Bold specific words in description:</label>
-                        <div id="boldWordsInputs">
-                            <div class="bold-word-input">
-                                <input type="text" class="bold-word" placeholder="Enter word to bold">
-                                <button type="button" class="remove-word-btn" onclick="removeWordInput(this)">Remove</button>
-                            </div>
-                        </div>
-                        <button type="button" class="add-word-btn" onclick="addWordInput()">+ Add Word</button>
+                    <div class="bold-instructions">
+                        <p><strong>Bold Text Instructions:</strong> Use <code>**text**</code> to make text bold. For example: "This is **bold text** in a sentence."</p>
                     </div>
                 </div>
                
                 <div class="form-group">
-                    <label for="dateInput">Date</label>
-                    <input type="date" id="dateInput">
+                    <input type="hidden" id="dateInput">
                 </div>
                
                 <div class="form-group">
@@ -333,16 +302,10 @@
                 </div>
                
                 <div class="form-group">
-                    <label>Signature Position & Size</label>
+                    <label>Signature Size</label>
                     <div class="position-controls">
-                        <div>
-                            <label for="sigX">X Position</label>
-                            <input type="number" id="sigX" value="100" min="0" max="1000">
-                        </div>
-                        <div>
-                            <label for="sigY">Y Position</label>
-                            <input type="number" id="sigY" value="500" min="0" max="1000">
-                        </div>
+                    <input type="hidden" id="sigX" value="100">
+                    <input type="hidden" id="sigY" value="500">
                         <div>
                             <label for="imgWidth">Width</label>
                             <input type="number" id="imgWidth" value="200" min="50" max="1000">
@@ -365,9 +328,7 @@
                 <div class="element-selector">
                     <label for="dragElement">Select element to position:</label>
                     <select id="dragElement">
-                        <option value="name">Recipient Name</option>
                         <option value="description">Description</option>
-                        <option value="date">Date</option>
                         <option value="signature">Signature</option>
                     </select>
                 </div>
@@ -390,7 +351,6 @@
         let img = new Image();
         let lowerImage = new Image();
         let hasTemplate = false;
-        let boldWords = [];
        
         // Element positions
         let elements = {
@@ -404,37 +364,6 @@
         let isDragging = false;
         let selectedElement = "name";
         let startX, startY;
-        
-        // Function to add a new bold word input
-        function addWordInput() {
-            const container = document.getElementById('boldWordsInputs');
-            const newInput = document.createElement('div');
-            newInput.className = 'bold-word-input';
-            newInput.innerHTML = `
-                <input type="text" class="bold-word" placeholder="Enter word to bold">
-                <button type="button" class="remove-word-btn" onclick="removeWordInput(this)">Remove</button>
-            `;
-            container.appendChild(newInput);
-        }
-        
-        // Function to remove a bold word input
-        function removeWordInput(button) {
-            const inputDiv = button.parentNode;
-            inputDiv.parentNode.removeChild(inputDiv);
-            drawText();
-        }
-        
-        // Function to collect all bold words
-        function collectBoldWords() {
-            const inputs = document.querySelectorAll('.bold-word');
-            boldWords = [];
-            inputs.forEach(input => {
-                if (input.value.trim() !== '') {
-                    boldWords.push(input.value.trim());
-                }
-            });
-            return boldWords;
-        }
        
         document.getElementById("upload").addEventListener("change", function(event) {
             let file = event.target.files[0];
@@ -507,7 +436,7 @@
             drawText();
         });
        
-        // Mouse events for dragging
+                // Mouse events for dragging
         canvas.addEventListener("mousedown", function(e) {
             const rect = canvas.getBoundingClientRect();
             const scaleX = canvas.width / rect.width;
@@ -600,44 +529,48 @@
             drawText();
         });
 
-        // Function to draw text with bold words
-        function drawTextWithBoldWords(text, x, y, fontSize, fontFamily, color) {
-            const words = text.split(' ');
-            const boldWordsList = collectBoldWords();
+        // Function to parse text with bold markers and render it
+        function drawTextWithBoldMarkers(text, x, y, fontSize, fontFamily, color) {
+            const segments = text.split(/(\*\*.*?\*\*)/g);
+            
+            ctx.textAlign = "center";
+            ctx.fillStyle = color;
             
             let currentX = x;
-            const metrics = ctx.measureText(' ');
-            const spaceWidth = metrics.width;
-            
-            // First measure all words to center properly
             let totalWidth = 0;
-            words.forEach(word => {
-                ctx.font = `normal ${fontSize}px ${fontFamily}`;
-                const wordWidth = ctx.measureText(word).width;
-                totalWidth += wordWidth + spaceWidth;
-            });
             
-            // Adjust starting position for center alignment
-            currentX = x - (totalWidth / 2) + spaceWidth;
-            
-            // Now draw each word
-            words.forEach((word, index) => {
-                const isBold = boldWordsList.some(boldWord => 
-                    word.toLowerCase().includes(boldWord.toLowerCase())
-                );
-                
-                if (isBold) {
-                    ctx.font = `bold ${fontSize}px ${fontFamily}`;
-                } else {
-                    ctx.font = `normal ${fontSize}px ${fontFamily}`;
+            // First measure the total width to center properly
+            segments.forEach(segment => {
+                let cleanSegment = segment;
+                if (segment.startsWith('**') && segment.endsWith('**')) {
+                    cleanSegment = segment.substring(2, segment.length - 2);
                 }
                 
-                ctx.fillStyle = color;
-                ctx.textAlign = "left";
+                ctx.font = segment.startsWith('**') && segment.endsWith('**') 
+                    ? `bold ${fontSize}px ${fontFamily}`
+                    : `normal ${fontSize}px ${fontFamily}`;
+                    
+                totalWidth += ctx.measureText(cleanSegment).width;
+            });
+            
+            // Start drawing from the left side of the centered text
+            currentX = x - (totalWidth / 2);
+            
+            // Now draw each segment
+            segments.forEach(segment => {
+                let cleanSegment = segment;
+                if (segment.startsWith('**') && segment.endsWith('**')) {
+                    cleanSegment = segment.substring(2, segment.length - 2);
+                }
                 
-                const wordWidth = ctx.measureText(word).width;
-                ctx.fillText(word, currentX, y);
-                currentX += wordWidth + spaceWidth;
+                ctx.font = segment.startsWith('**') && segment.endsWith('**') 
+                    ? `bold ${fontSize}px ${fontFamily}`
+                    : `normal ${fontSize}px ${fontFamily}`;
+                
+                ctx.textAlign = "left";
+                ctx.fillText(cleanSegment, currentX, y);
+                
+                currentX += ctx.measureText(cleanSegment).width;
             });
         }
 
@@ -679,10 +612,10 @@
             ctx.textAlign = "center";
             ctx.fillText(elements.name.text, elements.name.x, elements.name.y);
            
-            // Draw description with bold words
+            // Draw description with bold markers
             let lineHeight = elements.description.fontSize * 1.3;
             for (let i = 0; i < elements.description.lines.length; i++) {
-                drawTextWithBoldWords(
+                drawTextWithBoldMarkers(
                     elements.description.lines[i],
                     elements.description.x,
                     elements.description.y + (i * lineHeight),
@@ -733,16 +666,6 @@
         document.getElementById("descriptionInput").addEventListener("input", drawText);
         document.getElementById("dateInput").addEventListener("change", drawText);
         document.getElementById("fontSize").addEventListener("change", drawText);
-        
-        // Add initial bold word input
-        addWordInput();
-        
-        // Add event delegation for bold word inputs
-        document.getElementById("boldWordsInputs").addEventListener("input", function(e) {
-            if (e.target.classList.contains("bold-word")) {
-                drawText();
-            }
-        });
     </script>
 </body>
 </html>
