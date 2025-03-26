@@ -19,7 +19,7 @@ session_start();
             <h2 class="text-white fw-bold">DTI E-CERTIFICATION SYSTEM</h2>
             <p class="text-white mb-4">Enter your email to reset your password</p>
             
-            <form action="password_change.php" method="POST">
+            <form action="password_reset_code.php" method="POST">
                 <div class="form-group mb-3">
                     <input type="email" name="email" class="form-control" placeholder="Enter Email Address" required>
                 </div>
