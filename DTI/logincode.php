@@ -1,37 +1,52 @@
 <?php
-session_start();
+session_start(); // Start the session
+include("dbcon.php"); // Include the database connection
+
+date_default_timezone_set('Asia/Manila'); // Set timezone to Philippines
+
+if (isset($_POST['login_btn'])) {
+    if (!empty(trim($_POST['email'])) && !empty(trim($_POST['password']))) {
+        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $password = mysqli_real_escape_string($conn, $_POST['password']);
+
+        // Query to fetch user with the given email
+        $login_query = "SELECT * FROM users WHERE email = ?";
+        $stmt = $conn->prepare($login_query);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            // Verify password
+            if (password_verify($password, $row['password'])) {
+                if ($row['verify_status'] == "1") {
+                    // Set session variables for authenticated user
+                    $_SESSION['authenticated'] = true;
+                    $_SESSION['auth_user'] = [
+                        'id' => $row['id'],
+                        'email' => $row['email']
+                    ];
+                    // Redirect to dashboard
+                    header("Location: dashboard.php");
+                    exit();
+                } else {
+                    $_SESSION['status'] = "Please verify your email first.";
+                }
+            } else {
+                $_SESSION['status'] = "Invalid email or password.";
+            }
+        } else {
+            $_SESSION['status'] = "Your email is not registered.";
+        }
+        $stmt->close();
+    } else {
+        $_SESSION['status'] = "All fields are required.";
+    }
+
+    // Redirect back to the login page
+    header("Location: index.php");
+    exit();
+}
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">    
-</head>
-<body>
-    <img style="z-index: -2; position: absolute; width: 100%; height: 110%;" src="img/DTI-BACKGROUND.png" alt="">
-    
-    <div class="container vh-100 d-flex align-items-center justify-content-center">
-        <div class="col-md-4 p-4 shadow rounded text-center">
-            <h2 class="text-white fw-bold">DTI E-CERTIFICATION SYSTEM</h2>
-            <p class="text-white mb-4">Enter your email to reset your password</p>
-            
-            <form action="password_reset_code.php" method="POST">
-                <div class="form-group mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Enter Email Address" required>
-                </div>
-                <div class="form-group mb-3">
-                    <button type="submit" name="password_reset" class="btn btn-primary">Send Password Reset Link</button>
-                </div>
-            </form>
-            
-            <a href="index.php" class="password-reset-back-link">Back to Login</a>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
