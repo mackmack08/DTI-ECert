@@ -26,80 +26,87 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // View certificate modal
-    const viewCertificateModal = document.getElementById('viewCertificateModal');
-    if (viewCertificateModal) {
-        viewCertificateModal.addEventListener('show.bs.modal', function(event) {
-            const button = event.relatedTarget;
-            const certId = button.getAttribute('data-cert-id');
-            const certName = button.getAttribute('data-cert-name');
-            const certDate = button.getAttribute('data-cert-date');
-            const certType = button.getAttribute('data-cert-type');
-            const certDesc = button.getAttribute('data-cert-desc');
-            const certFile = button.getAttribute('data-cert-file');
+    viewCertificateModal.addEventListener('show.bs.modal', function(event) {
+        const button = event.relatedTarget;
+        const certId = button.getAttribute('data-cert-id');
+        const certName = button.getAttribute('data-cert-name');
+        const certDate = button.getAttribute('data-cert-date');
+        const certType = button.getAttribute('data-cert-type');
+        const certDesc = button.getAttribute('data-cert-desc');
+        const certFile = button.getAttribute('data-cert-file');
+        
+        console.log('Certificate file path:', certFile); // Debug log
+        
+        // Update modal content
+        document.getElementById('viewCertName').textContent = certName;
+        document.getElementById('viewUploadDate').textContent = 'Uploaded on ' + certDate;
+        document.getElementById('viewCertType').textContent = certType;
+        document.getElementById('viewCertDesc').textContent = certDesc;
+        
+        // Set download link with proper attributes
+        const downloadBtn = document.getElementById('downloadCertBtn');
+        downloadBtn.href = certFile;
+        downloadBtn.setAttribute('download', certName);
+        
+        // Display image or PDF viewer
+        const viewCertificateImage = document.getElementById('viewCertificateImage');
+        const fileExt = certFile.split('.').pop().toLowerCase();
+        
+        if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExt)) {
+            // For images
+            viewCertificateImage.src = certFile;
+            viewCertificateImage.style.display = 'block';
             
-            // Update modal content
-            document.getElementById('viewCertName').textContent = certName;
-            document.getElementById('viewUploadDate').textContent = 'Uploaded on ' + certDate;
-            document.getElementById('viewCertType').textContent = certType;
-            document.getElementById('viewCertDesc').textContent = certDesc;
-            
-            // Set download link
-            const downloadBtn = document.getElementById('downloadCertBtn');
-            downloadBtn.href = certFile;
-            downloadBtn.setAttribute('download', certName);
-            
-            // Set print link
-            document.getElementById('printCertBtn').onclick = function() {
-                window.open(certFile, '_blank').print();
-                return false;
-            };
-            
-            // Display image or PDF viewer
-            const viewCertificateImage = document.getElementById('viewCertificateImage');
-            const fileExt = certFile.split('.').pop().toLowerCase();
-            
-            if (['jpg', 'jpeg', 'png'].includes(fileExt)) {
-                viewCertificateImage.src = certFile;
-                viewCertificateImage.style.display = 'block';
-            } else if (fileExt === 'pdf') {
-                // Create PDF embed if it's a PDF
-                viewCertificateImage.style.display = 'none';
-                const pdfContainer = viewCertificateImage.parentElement;
-                
-                // Remove existing PDF viewer if any
-                const existingEmbed = pdfContainer.querySelector('embed');
-                if (existingEmbed) {
-                    pdfContainer.removeChild(existingEmbed);
-                }
-                
-                // Create new PDF viewer
-                const pdfEmbed = document.createElement('embed');
-                pdfEmbed.src = certFile;
-                pdfEmbed.type = 'application/pdf';
-                pdfEmbed.style.width = '100%';
-                pdfEmbed.style.height = '400px';
-                pdfEmbed.className = 'mb-3';
-                
-                // Insert before the buttons
-                pdfContainer.insertBefore(pdfEmbed, pdfContainer.querySelector('.mt-3'));
+            // Remove any existing PDF embed
+            const pdfContainer = viewCertificateImage.parentElement;
+            const existingEmbed = pdfContainer.querySelector('embed');
+            if (existingEmbed) {
+                pdfContainer.removeChild(existingEmbed);
             }
             
-            // Set up edit button
-            document.querySelector('.edit-from-view').onclick = function() {
-                // Hide this modal and show edit modal
-                const viewModal = bootstrap.Modal.getInstance(viewCertificateModal);
-                viewModal.hide();
-                
-                // Trigger edit modal with same data
-                setTimeout(() => {
-                    const editButton = document.querySelector(`button[data-bs-target="#editCertificateModal"][data-cert-id="${certId}"]`);
-                    if (editButton) {
-                        editButton.click();
-                    }
-                }, 500);
+            // Test image loading
+            viewCertificateImage.onload = function() {
+                console.log('Image loaded successfully');
             };
-        });
-    }
+            
+            viewCertificateImage.onerror = function() {
+                console.error('Failed to load image:', certFile);
+                this.src = 'assets/images/image-not-found.png';
+            };
+        } else if (fileExt === 'pdf') {
+            // For PDFs
+            viewCertificateImage.style.display = 'none';
+            const pdfContainer = viewCertificateImage.parentElement;
+            
+            // Remove existing PDF viewer if any
+            const existingEmbed = pdfContainer.querySelector('embed');
+            if (existingEmbed) {
+                pdfContainer.removeChild(existingEmbed);
+            }
+            
+            // Create new PDF viewer
+            const pdfEmbed = document.createElement('embed');
+            pdfEmbed.src = certFile;
+            pdfEmbed.type = 'application/pdf';
+            pdfEmbed.style.width = '100%';
+            pdfEmbed.style.height = '400px';
+            pdfEmbed.className = 'mb-3';
+            
+            // Insert before the buttons
+            pdfContainer.insertBefore(pdfEmbed, pdfContainer.querySelector('.mt-3'));
+        } else {
+            // For other file types
+            viewCertificateImage.src = 'assets/images/document-icon.png';
+            viewCertificateImage.style.display = 'block';
+            
+            // Remove any existing PDF embed
+            const pdfContainer = viewCertificateImage.parentElement;
+            const existingEmbed = pdfContainer.querySelector('embed');
+            if (existingEmbed) {
+                pdfContainer.removeChild(existingEmbed);
+            }
+        }
+    });
     
     // Edit certificate modal
     const editCertificateModal = document.getElementById('editCertificateModal');
