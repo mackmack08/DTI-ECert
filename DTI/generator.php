@@ -240,7 +240,11 @@
             <h2>Certificate Generator</h2>
             <p>Create professional certificates with ease</p>
         </header>
-       
+        <div class="col-md-3 text-md-end">
+            <a href="certificate_management.php" class="btn back-btn">
+                <i class="fas fa-arrow-left me-2"></i> Back
+            </a>
+        </div>
         <div class="app-container">
             <div class="input-section">
                 <h3 class="section-title">Input Settings</h3>
@@ -249,7 +253,17 @@
                     <label for="upload">Upload Certificate Template</label>
                     <input type="file" id="upload" accept="image/*">
                 </div>
-               
+                
+                <!-- Add certificate name input -->
+                <div class="form-group certificate-name">
+                    <label for="certificateName">Certificate Name</label>
+                    <input type="text" id="certificateName" placeholder="Enter certificate name" required>
+                    <small>This name will be used to identify the certificate in the system</small>
+                </div>
+                <div class="form-group certificate-file-description">
+                    <label for="certificateFileDescription">Template Description</label>
+                    <textarea id="certificateFileDescription" placeholder="Enter a description for this certificate template" rows="3"></textarea>
+                </div>
                 <div class="form-group">
                     <input type="hidden" id="nameInput" placeholder="Enter recipient's name">
                 </div>
@@ -339,8 +353,11 @@
                
                 <div class="button-group">
                     <button onclick="drawText()" class="generate-btn">Generate Certificate</button>
-                    <button onclick="downloadCertificate()" class="download-btn">Download Certificate</button>
+                    <button onclick="saveCertificate()" class="save-btn">Save Certificate</button>
                 </div>
+
+                <!-- Add status message div -->
+                <div id="statusMessage" style="margin-top: 15px; padding: 10px; display: none;"></div>
             </div>
         </div>
     </div>
@@ -436,7 +453,7 @@
             drawText();
         });
        
-                // Mouse events for dragging
+        // Mouse events for dragging
         canvas.addEventListener("mousedown", function(e) {
             const rect = canvas.getBoundingClientRect();
             const scaleX = canvas.width / rect.width;
@@ -573,7 +590,6 @@
                 currentX += ctx.measureText(cleanSegment).width;
             });
         }
-
         function drawText() {
             if (!hasTemplate) {
                 alert("Please upload a certificate template first");
@@ -645,22 +661,79 @@
             }
         }
 
-        function downloadCertificate() {
+        function saveCertificate() {
             if (!hasTemplate) {
                 alert("Please generate a certificate first");
                 return;
             }
-           
-            // Generate a filename with date
-            const recipientName = document.getElementById("nameInput").value || "certificate";
-            const filename = `certificate_${recipientName.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0, 10)}.png`;
-           
-            let link = document.createElement("a");
-            link.download = filename;
-            link.href = canvas.toDataURL("image/png");
-            link.click();
+            
+            // Get certificate name
+            const certificateName = document.getElementById("certificateName").value.trim();
+            if (!certificateName) {
+                alert("Please enter a certificate name");
+                return;
+            }
+            
+            // Get certificate file description (the one stored in the database)
+            const certificateFileDescription = document.getElementById("certificateFileDescription").value;
+            
+            // Get certificate content description (used in the certificate itself)
+            const certificateContentDescription = document.getElementById("descriptionInput").value;
+            
+            // Get canvas data as base64 string
+            const imageData = canvas.toDataURL('image/png');
+            
+            // Show loading indicator
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.style.display = 'block';
+            statusDiv.style.backgroundColor = '#e2e3e5';
+            statusDiv.style.color = '#383d41';
+            statusDiv.innerHTML = '<strong>Processing...</strong> Saving certificate...';
+            
+            // Create data object
+            const data = {
+                name: certificateName,
+                file_description: certificateFileDescription,
+                content_description: certificateContentDescription,
+                image_data: imageData
+            };
+            
+            // Send to server using fetch API
+            fetch('save_certificate.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                statusDiv.style.display = 'block';
+                
+                if (data.success) {
+                    statusDiv.style.backgroundColor = '#d4edda';
+                    statusDiv.style.color = '#155724';
+                    statusDiv.innerHTML = `<strong>Success!</strong> ${data.message}`;
+                    
+                    // Redirect after a delay
+                    setTimeout(() => {
+                        window.location.href = 'certificate_management.php';
+                    }, 2000);
+                } else {
+                    statusDiv.style.backgroundColor = '#f8d7da';
+                    statusDiv.style.color = '#721c24';
+                    statusDiv.innerHTML = `<strong>Error!</strong> ${data.message}`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                statusDiv.style.display = 'block';
+                statusDiv.style.backgroundColor = '#f8d7da';
+                statusDiv.style.color = '#721c24';
+                statusDiv.innerHTML = '<strong>Error!</strong> Failed to save certificate. Please try again.';
+            });
         }
-       
+
         // Add event listeners to update the preview when inputs change
         document.getElementById("nameInput").addEventListener("input", drawText);
         document.getElementById("descriptionInput").addEventListener("input", drawText);
@@ -669,4 +742,3 @@
     </script>
 </body>
 </html>
-
