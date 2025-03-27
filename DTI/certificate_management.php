@@ -10,63 +10,6 @@ $currentPage = "Certificate Management";
 $message = '';
 $messageType = '';
 
-// Add new certificate
-if (isset($_POST['add_certificate'])) {
-    // Get form data
-    $name = trim($_POST['certName']);
-    $description = trim($_POST['certDesc']);
-    $file = $_FILES['certFile'];
-   
-    // Basic validation
-    if (empty($name) || $file['error'] !== UPLOAD_ERR_OK) {
-        $message = "Please fill all required fields and upload a valid file.";
-        $messageType = "danger";
-    } else {
-        // File upload validation
-        $allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $fileType = finfo_file($finfo, $file["tmp_name"]);
-        finfo_close($finfo);
-        $fileExtension = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
-       
-        if (!in_array($fileExtension, ['pdf', 'jpg', 'jpeg', 'png'])) {
-            $message = "Invalid file type. Only JPG, PNG and PDF are allowed.";
-            $messageType = "danger";
-        } else if ($file["size"] > 5 * 1024 * 1024) {
-            $message = "File is too large. Maximum size is 5MB.";
-            $messageType = "danger";
-        } else {
-            // Create unique filename
-            $targetDir = "uploads/certificates/";
-            if (!file_exists($targetDir)) {
-                mkdir($targetDir, 0777, true);
-            }
-           
-            $uniqueFilename = uniqid('cert_') . '.' . $fileExtension;
-            $targetFile = $targetDir . $uniqueFilename;
-           
-            // Move uploaded file
-            if (move_uploaded_file($file["tmp_name"], $targetFile)) {
-                // Insert into database
-                $stmt = $conn->prepare("INSERT INTO certificates (name, description, file_path) VALUES (?, ?, ?)");
-                $stmt->bind_param("sss", $name, $description, $targetFile);
-               
-                if ($stmt->execute()) {
-                    $message = "Certificate added successfully!";
-                    $messageType = "success";
-                } else {
-                    $message = "Error: " . $stmt->error;
-                    $messageType = "danger";
-                }
-                $stmt->close();
-            } else {
-                $message = "Error uploading file.";
-                $messageType = "danger";
-            }
-        }
-    }
-}
-
 // Edit certificate
 if (isset($_POST['edit_certificate'])) {
     $id = $_POST['editCertId'];
@@ -88,7 +31,6 @@ if (isset($_POST['edit_certificate'])) {
    
     $stmt->close();
 }
-
 
 // Delete certificate
 if (isset($_POST['delete_certificate'])) {
@@ -142,83 +84,101 @@ include('sidebar.php');
         </div>
         <?php endif; ?>
 
-        <!-- Search and Add Certificate Section -->
-        <div class="row mb-4 align-items-center">
-            <div class="col-md-6 text-md-start">
-                <a href="#" class="btn add-certificate-btn" data-bs-toggle="modal" data-bs-target="#addCertificateModal">
-                    <i class="fas fa-plus"></i> Add New Certificate
-                </a>
-            </div>
+         <!-- Search and Add Certificate Section -->
+         <div class="row mb-4 align-items-center">
+         <div class="col-md-6 text-md-start">
+            <a href="generator.php" class="btn btn-primary px-4 py-2 shadow-sm rounded-pill fw-bold text-white">
+                <i class="fas fa-plus me-2"></i> Add New Certificate
+            </a>
+        </div>
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-text bg-white border-end-0">
                         <i class="fas fa-search text-muted"></i>
-                    </span>
+                    </span> 
                     <input type="text" class="form-control search-input border-start-0" id="searchCertificate" placeholder="Search Certificate's Name">
                 </div>
             </div>
         </div>
 
-        <!-- Certificates Cards -->
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
-            <?php
-            // Fetch certificates from the database
-            $result = $conn->query("SELECT * FROM certificates ORDER BY upload_date DESC");
+<!-- Certificates Cards -->
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
+    <?php
+    // Fetch certificates from the database
+    $result = $conn->query("SELECT * FROM certificates ORDER BY upload_date DESC");
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            // Format date
+            $uploadDate = date('F j, Y', strtotime($row['upload_date']));
            
-            if ($result && $result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    // Format date
-                    $uploadDate = date('F j, Y', strtotime($row['upload_date']));
-                   
-                    // Determine file type for display
-                    $fileExtension = strtolower(pathinfo($row['file_path'], PATHINFO_EXTENSION));
-                    $fileTypeDisplay = 'Document';
-                    if (in_array($fileExtension, ['jpg', 'jpeg', 'png'])) {
-                        $fileTypeDisplay = 'Image';
-                    } else if ($fileExtension === 'pdf') {
-                        $fileTypeDisplay = 'PDF Document';
-                    }
-                   
-                    echo '<div class="col certificate-item">';
-                    echo '<div class="card certificate-card">';
-                    echo '<div class="card-body">';
-                    echo '<h5 class="card-title">' . htmlspecialchars($row['name']) . '</h5>';
-                    echo '<p class="card-text">' . htmlspecialchars($row['description']) . '</p>';
-                    echo '<div class="certificate-date mb-3">';
-                    echo '<i class="far fa-calendar-alt me-1"></i> Uploaded on ' . $uploadDate;
-                    echo '</div>';
-                    echo '<div class="action-buttons">';
-                    echo '<button class="btn btn-primary-custom btn-sm" data-bs-toggle="modal" data-bs-target="#viewCertificateModal"
-                            data-cert-id="' . $row['id'] . '"
-                            data-cert-name="' . htmlspecialchars($row['name']) . '"
-                            data-cert-date="' . $uploadDate . '"
-                            data-cert-type="' . $fileTypeDisplay . '"
-                            data-cert-desc="' . htmlspecialchars($row['description']) . '"
-                            data-cert-file="' . htmlspecialchars($row['file_path']) . '">';
-                    echo '<i class="fas fa-eye"></i> View</button>';
-                    echo '<button class="btn btn-warning-custom btn-sm ms-1" data-bs-toggle="modal" data-bs-target="#editCertificateModal"
-                            data-cert-id="' . $row['id'] . '"
-                            data-cert-name="' . htmlspecialchars($row['name']) . '"
-                            data-cert-date="' . $uploadDate . '"
-                            data-cert-desc="' . htmlspecialchars($row['description']) . '"
-                            data-cert-file="' . htmlspecialchars($row['file_path']) . '">';
-                    echo '<i class="fas fa-edit"></i> Edit</button>';
-                    echo '<button class="btn btn-danger-custom btn-sm ms-1" data-bs-toggle="modal" data-bs-target="#deleteCertificateModal"
-                            data-cert-id="' . $row['id'] . '"
-                            data-cert-name="' . htmlspecialchars($row['name']) . '">';
-                    echo '<i class="fas fa-trash-alt"></i> Delete</button>';
-                    echo '</div></div></div></div>';
-                }
-            } else {
-                echo '<div class="col-12 text-center">';
-                echo '<div class="alert alert-info">';
-                echo '<i class="fas fa-info-circle me-2"></i> No certificates found. Add your first certificate using the button above.';
-                echo '</div>';
-                echo '</div>';
+            // Determine file type for display
+            $fileExtension = strtolower(pathinfo($row['file_path'], PATHINFO_EXTENSION));
+            $fileTypeDisplay = 'Document';
+            if (in_array($fileExtension, ['jpg', 'jpeg', 'png'])) {
+                $fileTypeDisplay = 'Image';
+            } else if ($fileExtension === 'pdf') {
+                $fileTypeDisplay = 'PDF Document';
             }
-            ?>
-        </div>
-       
+
+            // Ensure file path is a full URL
+            $filePath = $row['file_path'];
+            // Check if the path is relative and convert to absolute URL if needed
+            if (!preg_match('/^https?:\/\//', $filePath)) {
+                // Get the directory where the script is running
+                $baseDir = dirname($_SERVER['SCRIPT_NAME']);
+                $baseURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+                
+                // If baseDir is root, avoid double slash
+                if ($baseDir == '/') $baseDir = '';
+                
+                // Create proper URL
+                $filePath = $baseURL . $baseDir . '/' . ltrim($filePath, '/');
+            }
+
+            echo '<div class="col certificate-item">';
+            echo '    <div class="card certificate-card">';
+            echo '        <div class="card-body">';
+            echo '            <h5 class="card-title">' . htmlspecialchars($row['name']) . '</h5>';
+            echo '            <p class="card-text">' . htmlspecialchars($row['description']) . '</p>';
+            echo '            <div class="certificate-date mb-3">';
+            echo '                <i class="far fa-calendar-alt me-1"></i> Uploaded on ' . $uploadDate;
+            echo '            </div>';
+            echo '            <div class="action-buttons">';
+            echo '                <button class="btn btn-primary-custom btn-sm" data-bs-toggle="modal" data-bs-target="#viewCertificateModal"';
+            echo '                        data-cert-id="' . $row['id'] . '"';
+            echo '                        data-cert-name="' . htmlspecialchars($row['name']) . '"';
+            echo '                        data-cert-date="' . $uploadDate . '"';
+            echo '                        data-cert-type="' . $fileTypeDisplay . '"';
+            echo '                        data-cert-desc="' . htmlspecialchars($row['description']) . '"';
+            echo '                        data-cert-file="' . htmlspecialchars($filePath) . '">';
+            echo '                    <i class="fas fa-eye"></i> View</button>';
+            echo '                <button class="btn btn-warning-custom btn-sm ms-1" data-bs-toggle="modal" data-bs-target="#editCertificateModal"';
+            echo '                        data-cert-id="' . $row['id'] . '"';
+            echo '                        data-cert-name="' . htmlspecialchars($row['name']) . '"';
+            echo '                        data-cert-date="' . $uploadDate . '"';
+            echo '                        data-cert-desc="' . htmlspecialchars($row['description']) . '"';
+            echo '                        data-cert-file="' . htmlspecialchars($filePath) . '">';
+            echo '                    <i class="fas fa-edit"></i> Edit</button>';
+            echo '                <button class="btn btn-danger-custom btn-sm ms-1" data-bs-toggle="modal" data-bs-target="#deleteCertificateModal"';
+            echo '                        data-cert-id="' . $row['id'] . '"';
+            echo '                        data-cert-name="' . htmlspecialchars($row['name']) . '">';
+            echo '                    <i class="fas fa-trash-alt"></i> Delete</button>';
+            echo '            </div>';
+            echo '        </div>';
+            echo '    </div>';
+            echo '</div>';
+        }
+    } else {
+        echo '<div class="col-12 text-center">';
+        echo '    <div class="alert alert-info">';
+        echo '        <i class="fas fa-info-circle me-2"></i> No certificates found. Add your first certificate using the button above.';
+        echo '    </div>';
+        echo '</div>';
+    }
+    ?>
+</div>
+
         <!-- Pagination -->
         <?php if (isset($result) && $result->num_rows > 9): // Only show pagination if there are enough items ?>
         <div class="row mt-4">
@@ -252,107 +212,42 @@ include('sidebar.php');
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <!-- Left side - Certificate Info -->
-                    <div class="col-md-5">
-                        <div class="certificate-details-container">
-                            <div class="certificate-details-header">
-                                <h4 class="certificate-details-title" id="viewCertName">Certificate Name</h4>
-                                <p class="certificate-details-subtitle" id="viewUploadDate">Uploaded on</p>
-                            </div>
-                            <div class="certificate-detail-row">
-                                <div class="certificate-detail-label">File Type:</div>
-                                <div class="certificate-detail-value" id="viewCertType">Type</div>
-                            </div>
-                            <div class="certificate-detail-row">
-                                <div class="certificate-detail-label">Description:</div>
-                                <div class="certificate-detail-value" id="viewCertDesc">Description</div>
-                            </div>
+                   <!-- Left side - Certificate Info -->
+                <div class="col-md-5">
+                    <div class="certificate-details-container">
+                        <div class="certificate-details-header">
+                            <h4 class="certificate-details-title" id="viewCertName">Certificate Name</h4>
+                            <p class="certificate-details-subtitle" id="viewUploadDate">Uploaded on</p>
+                        </div>
+                        <div class="certificate-detail-row">
+                            <div class="certificate-detail-label">File Type:</div>
+                            <div class="certificate-detail-value" id="viewCertType">Type</div>
+                        </div>
+                        <div class="certificate-detail-row">
+                            <div class="certificate-detail-label">Description:</div>
+                            <div class="certificate-detail-value" id="viewCertDesc">Description</div>
                         </div>
                     </div>
+                </div>
+
                     <!-- Right side - Certificate Image/PDF -->
                     <div class="col-md-7">
                         <div class="certificate-details-container d-flex flex-column align-items-center justify-content-center">
                             <!-- PDF viewer will be inserted here by JavaScript -->
-                            <img src="" alt="Certificate Preview" class="img-fluid mb-3" id="viewCertificateImage" style="max-height: 400px; width: auto;">
+                            <!-- In your HTML, add an onerror handler to the image -->
+                            <img src="" alt="Certificate Preview" class="img-fluid mb-3" id="viewCertificateImage" 
+                            style="max-height: 400px; width: auto;" 
+                            onerror="this.src='assets/images/image-not-found.png'; this.onerror='';">
+
+
                             <div class="mt-3">
                                 <a href="#" class="btn btn-success" id="downloadCertBtn" download>
                                     <i class="fas fa-download me-2"></i> Download Certificate
-                                </a>
-                                <a href="#" class="btn btn-secondary" id="printCertBtn">
-                                    <i class="fas fa-print me-2"></i> Print Certificate
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-warning-custom edit-from-view">
-                    <i class="fas fa-edit me-2"></i> Edit Certificate
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Add Certificate Modal -->
-<div class="modal fade" id="addCertificateModal" tabindex="-1" aria-labelledby="addCertificateModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addCertificateModalLabel">Add New Certificate</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="addCertificateForm" method="POST" enctype="multipart/form-data">
-                    <div class="row">
-                        <!-- Basic Information -->
-                        <div class="col-md-6">
-                            <h5 class="mb-3">Certificate Information</h5>
-                           
-                            <div class="form-group mb-3">
-                                <label for="certName" class="form-label">Certificate Name</label>
-                                <input type="text" class="form-control" id="certName" name="certName" required>
-                            </div>
-                           
-                            <div class="form-group mb-3">
-                                <label for="certDesc" class="form-label">Description</label>
-                                <textarea class="form-control" id="certDesc" name="certDesc" rows="3"></textarea>
-                            </div>
-                        </div>
-                       
-                        <!-- File Upload -->
-                        <div class="col-md-6">
-                            <h5 class="mb-3">Certificate Upload</h5>
-                           
-                            <div class="form-group mb-3">
-                                <label for="certFile" class="form-label">Certificate File</label>
-                                <input type="file" class="form-control" id="certFile" name="certFile" accept=".pdf,.jpg,.jpeg,.png" required>
-                                <div class="form-text">Upload certificate file (PDF, JPG, PNG)</div>
-                            </div>
-                           
-                            <div class="form-group mb-3">
-                                <label class="form-label">Preview</label>
-                                <div class="card bg-light p-3 d-flex justify-content-center align-items-center" style="min-height: 200px;">
-                                    <div id="previewPlaceholder" class="text-center text-muted">
-                                        <i class="fas fa-certificate fa-3x mb-2"></i>
-                                        <p>Certificate preview will appear here</p>
-                                    </div>
-                                    <img id="certPreview" class="img-fluid" style="max-height: 180px; display: none;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="hidden" name="add_certificate" value="1">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" form="addCertificateForm" class="btn btn-primary-custom">
-                    <i class="fas fa-plus me-2"></i> Add Certificate
-                </button>
             </div>
         </div>
     </div>
@@ -388,8 +283,6 @@ include('sidebar.php');
                         <!-- File Upload -->
                         <div class="col-md-6">
                             <h5 class="mb-3">Certificate File</h5>
-                           
-                        
                            
                             <div class="form-group mb-3">
                                 <label class="form-label">Current Certificate</label>
@@ -439,8 +332,153 @@ include('sidebar.php');
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="certificate_management.js"></script>
+<script>
+// JavaScript for certificate management functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Search functionality
+    const searchInput = document.getElementById('searchCertificate');
+    if (searchInput) {
+        searchInput.addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const certificateItems = document.querySelectorAll('.certificate-item');
+            
+            certificateItems.forEach(item => {
+                const certName = item.querySelector('.card-title').textContent.toLowerCase();
+                const certDesc = item.querySelector('.card-text').textContent.toLowerCase();
+                
+                if (certName.includes(searchTerm) || certDesc.includes(searchTerm)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    // Edit certificate modal
+    const editCertificateModal = document.getElementById('editCertificateModal');
+    if (editCertificateModal) {
+        editCertificateModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const certId = button.getAttribute('data-cert-id');
+            const certName = button.getAttribute('data-cert-name');
+            const certDesc = button.getAttribute('data-cert-desc');
+            const certFile = button.getAttribute('data-cert-file');
+            
+            // Update modal content
+            document.getElementById('editCertId').value = certId;
+            document.getElementById('editCertName').value = certName;
+            document.getElementById('editCertDesc').value = certDesc;
+            
+            // Update preview image
+            const editCertPreview = document.getElementById('editCertPreview');
+            const fileExt = certFile.split('.').pop().toLowerCase();
+            
+            if (['jpg', 'jpeg', 'png'].includes(fileExt)) {
+                editCertPreview.src = certFile;
+                editCertPreview.style.display = 'block';
+            } else if (fileExt === 'pdf') {
+                // For PDF, show a placeholder or PDF icon
+                editCertPreview.src = 'assets/images/pdf-icon.png'; // Replace with your PDF icon path
+                editCertPreview.style.display = 'block';
+            } else {
+                // For other file types
+                editCertPreview.src = 'assets/images/document-icon.png'; // Replace with your document icon path
+                editCertPreview.style.display = 'block';
+            }
+        });
+    }
+
+    // Delete certificate modal
+    const deleteCertificateModal = document.getElementById('deleteCertificateModal');
+    if (deleteCertificateModal) {
+        deleteCertificateModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const certId = button.getAttribute('data-cert-id');
+            const certName = button.getAttribute('data-cert-name');
+            
+            // Update modal content
+            document.getElementById('deleteCertId').value = certId;
+            document.getElementById('deleteCertName').textContent = certName;
+        });
+    }
+
+    // View certificate modal
+    const viewCertificateModal = document.getElementById('viewCertificateModal');
+    if (viewCertificateModal) {
+        viewCertificateModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const certId = button.getAttribute('data-cert-id');
+            const certName = button.getAttribute('data-cert-name');
+            const certDate = button.getAttribute('data-cert-date');
+            const certType = button.getAttribute('data-cert-type');
+            const certDesc = button.getAttribute('data-cert-desc');
+            const certFile = button.getAttribute('data-cert-file');
+            
+            console.log('Certificate file path:', certFile); // Debug log
+            
+            // Update modal content
+            document.getElementById('viewCertName').textContent = certName;
+            document.getElementById('viewUploadDate').textContent = 'Uploaded on ' + certDate;
+            document.getElementById('viewCertType').textContent = certType;
+            document.getElementById('viewCertDesc').textContent = certDesc;
+            
+            // Set download link
+            const downloadBtn = document.getElementById('downloadCertBtn');
+            downloadBtn.href = certFile;
+            downloadBtn.setAttribute('download', certName);
+        
+        
+            // Display image or PDF viewer
+            const viewCertificateImage = document.getElementById('viewCertificateImage');
+            const fileExt = certFile.split('.').pop().toLowerCase();
+            
+            if (['jpg', 'jpeg', 'png'].includes(fileExt)) {
+                viewCertificateImage.src = certFile;
+                viewCertificateImage.style.display = 'block';
+            } else if (fileExt === 'pdf') {
+                // Create PDF embed if it's a PDF
+                viewCertificateImage.style.display = 'none';
+                const pdfContainer = viewCertificateImage.parentElement;
+                
+                // Remove existing PDF viewer if any
+                const existingEmbed = pdfContainer.querySelector('embed');
+                if (existingEmbed) {
+                    pdfContainer.removeChild(existingEmbed);
+                }
+                
+                // Create new PDF viewer
+                const pdfEmbed = document.createElement('embed');
+                pdfEmbed.src = certFile;
+                pdfEmbed.type = 'application/pdf';
+                pdfEmbed.style.width = '100%';
+                pdfEmbed.style.height = '400px';
+                pdfEmbed.className = 'mb-3';
+                
+                // Insert before the buttons
+                pdfContainer.insertBefore(pdfEmbed, pdfContainer.querySelector('.mt-3'));
+            }
+            
+            // Set up edit button
+            document.querySelector('.edit-from-view').onclick = function() {
+                // Hide this modal and show edit modal
+                const viewModal = bootstrap.Modal.getInstance(viewCertificateModal);
+                viewModal.hide();
+                
+                // Trigger edit modal with same data
+                setTimeout(() => {
+                    const editButton = document.querySelector(`button[data-bs-target="#editCertificateModal"][data-cert-id="${certId}"]`);
+                    if (editButton) {
+                        editButton.click();
+                    }
+                }, 500);
+            };
+        });
+    }
+});
+</script>
 <?php
 // Include the footer
 include('footer.php');
 ?>
+
