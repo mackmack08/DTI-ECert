@@ -1,9 +1,24 @@
 <?php include('dbcon.php'); // Include database connection
-
 require 'vendor/autoload.php'; // Include PhpSpreadsheet
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
+$pageTitle = "DTI Sheet Management";
+$currentPage = "Sheet Management";
+include('header.php');
+include('sidebar.php');
+
+$certificates = [];
+$cert_query = "SELECT * FROM certificates ORDER BY name ASC";
+$cert_result = $conn->query($cert_query);
+while ($cert_row = $cert_result->fetch_assoc()) {
+    $certificates[] = [
+        'id' => $cert_row['id'],
+        'name' => $cert_row['name'],
+        'description' => $cert_row['description'],
+        'file_path' => $cert_row['file_path']
+    ];
+}
 
 $uploaded_files = []; // Retrieve all uploaded files from the database to display existing files
 $query = "SELECT * FROM files ORDER BY upload_time DESC";
@@ -23,6 +38,8 @@ while ($row = $result->fetch_assoc()) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file_upload'])) {
     $file_uploads = $_FILES['file_upload'];
     $upload_dir = 'uploads/';
+    $completion_date = isset($_POST['completion_date']) ? $_POST['completion_date'] : null;
+    $cert_type = isset($_POST['cert_type']) ? $_POST['cert_type'] : null;
 
     // Create directory if it doesn't exist
     if (!file_exists($upload_dir)) {
@@ -66,92 +83,84 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file_upload'])) {
                 // Iterate over the rows in the spreadsheet
                 $highestRow = $sheet->getHighestRow();
                 $highestColumn = $sheet->getHighestColumn();
-               
+
                 // Loop through each row and insert the data into the clients table
                 for ($row = 2; $row <= $highestRow; $row++) { // Assuming row 1 contains headers
-                    $timestamp = $sheet->getCell('A' . $row)->getValue();
-                    $client_name = $sheet->getCell('B' . $row)->getValue();
-                    $client_type = $sheet->getCell('C' . $row)->getValue();
-                    $sex = $sheet->getCell('D' . $row)->getValue();
-                    $age = $sheet->getCell('E' . $row)->getValue();
-                    $region = $sheet->getCell('F' . $row)->getValue();
-                    $contact = $sheet->getCell('G' . $row)->getValue();
-                    $email = $sheet->getCell('H' . $row)->getValue();
-                    $service_ro_objectives_achieved = $sheet->getCell('I' . $row)->getValue();
-                    $service_ro_info_received = $sheet->getCell('J' . $row)->getValue();
-                    $service_ro_relevance_value = $sheet->getCell('K' . $row)->getValue();
-                    $service_ro_duration_sufficient = $sheet->getCell('L' . $row)->getValue();
-                    $service_af_sign_up_access = $sheet->getCell('M' . $row)->getValue();
-                    $service_af_audio_video_sync = $sheet->getCell('N' . $row)->getValue();
-                    $resource_speaker_rq_knowledge = $sheet->getCell('O' . $row)->getValue();
-                    $resource_speaker_rq_clarity = $sheet->getCell('P' . $row)->getValue();
-                    $resource_speaker_rq_engagement = $sheet->getCell('Q' . $row)->getValue();
-                    $resource_speaker_rq_visual_relevance = $sheet->getCell('R' . $row)->getValue();
-                    $resource_speaker_ri_answer_questions = $sheet->getCell('S' . $row)->getValue();
-                    $resource_speaker_ri_chat_responsiveness = $sheet->getCell('T' . $row)->getValue();
-                    $moderator_rr_manage_discussion = $sheet->getCell('U' . $row)->getValue();
-                    $moderator_rr_monitor_raises_questions = $sheet->getCell('V' . $row)->getValue();
-                    $moderator_rr_manage_program = $sheet->getCell('W' . $row)->getValue();
-                    $host_secretariat_rr_technical_assistance = $sheet->getCell('X' . $row)->getValue();
-                    $host_secretariat_rr_admittance_management = $sheet->getCell('Y' . $row)->getValue();
-                    $overall_satisfaction_rating = $sheet->getCell('Z' . $row)->getValue();
-                    $feedback_dissatisfied_reasons = $sheet->getCell('AA' . $row)->getValue();
-                    $feedback_improvement_suggestions = $sheet->getCell('AB' . $row)->getValue();
+                    $timestampValue = $sheet->getCell('A' . $row)->getValue();
                     
-                    $timestamp = $timestamp ?? '';
-                    $client_name = $client_name ?? '';
-                    $client_type = $client_type ?? '';
-                    $sex = $sex ?? '';
-                    $age = $age ?? '';
-                    $region = $region ?? '';
-                    $contact = $contact ?? '';
-                    $email = $email ?? '';
-                    $service_ro_objectives_achieved = $service_ro_objectives_achieved ?? '';
-                    $service_ro_info_received = $service_ro_info_received ?? '';
-                    $service_ro_relevance_value = $service_ro_relevance_value ?? '';
-                    $service_ro_duration_sufficient = $service_ro_duration_sufficient ?? '';
-                    $service_af_sign_up_access = $service_af_sign_up_access ?? '';
-                    $service_af_audio_video_sync = $service_af_audio_video_sync ?? '';
-                    $resource_speaker_rq_knowledge = $resource_speaker_rq_knowledge ?? '';
-                    $resource_speaker_rq_clarity = $resource_speaker_rq_clarity ?? '';
-                    $resource_speaker_rq_engagement = $resource_speaker_rq_engagement ?? '';
-                    $resource_speaker_rq_visual_relevance = $resource_speaker_rq_visual_relevance ?? '';
-                    $resource_speaker_ri_answer_questions = $resource_speaker_ri_answer_questions ?? '';
-                    $resource_speaker_ri_chat_responsiveness = $resource_speaker_ri_chat_responsiveness ?? '';
-                    $moderator_rr_manage_discussion = $moderator_rr_manage_discussion ?? '';
-                    $moderator_rr_monitor_raises_questions = $moderator_rr_monitor_raises_questions ?? '';
-                    $moderator_rr_manage_program = $moderator_rr_manage_program ?? '';
-                    $host_secretariat_rr_technical_assistance = $host_secretariat_rr_technical_assistance ?? '';
-                    $host_secretariat_rr_admittance_management = $host_secretariat_rr_admittance_management ?? '';
-                    $overall_satisfaction_rating = $overall_satisfaction_rating ?? '';
-                    $feedback_dissatisfied_reasons = $feedback_dissatisfied_reasons ?? '';
-                    $feedback_improvement_suggestions = $feedback_improvement_suggestions ?? '';
+                    // Skip rows with empty timestamp
+                    if (empty($timestampValue)) {
+                        continue;
+                    }
 
-                    // Insert into clients table
+                    // Check if it's a numeric value (Excel date/time)
+                    if (is_numeric($timestampValue)) {
+                        // Convert Excel date/time to PHP DateTime
+                        $dateObject = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($timestampValue);
+                        // Format the date as needed
+                        $timestamp = $dateObject->format('Y-m-d H:i:s');
+                    } else {
+                        // If it's already a string, use it as is
+                        $timestamp = $timestampValue;
+                    }
+                    
+                    // Get all cell values and ensure they're not NULL
+                    $client_name = $sheet->getCell('B' . $row)->getValue() ?? '';
+                    $client_type = $sheet->getCell('C' . $row)->getValue() ?? '';
+                    $sex = $sheet->getCell('D' . $row)->getValue() ?? '';
+                    $age = $sheet->getCell('E' . $row)->getValue() ?? '';
+                    $region = $sheet->getCell('F' . $row)->getValue() ?? '';
+                    $contact = $sheet->getCell('G' . $row)->getValue() ?? '';
+                    $email = $sheet->getCell('H' . $row)->getValue() ?? '';
+                    $service_ro_objectives_achieved = $sheet->getCell('I' . $row)->getValue() ?? '';
+                    $service_ro_info_received = $sheet->getCell('J' . $row)->getValue() ?? '';
+                    $service_ro_relevance_value = $sheet->getCell('K' . $row)->getValue() ?? '';
+                    $service_ro_duration_sufficient = $sheet->getCell('L' . $row)->getValue() ?? '';
+                    $service_af_sign_up_access = $sheet->getCell('M' . $row)->getValue() ?? '';
+                    $service_af_audio_video_sync = $sheet->getCell('N' . $row)->getValue() ?? '';
+                    $resource_speaker_rq_knowledge = $sheet->getCell('O' . $row)->getValue() ?? '';
+                    $resource_speaker_rq_clarity = $sheet->getCell('P' . $row)->getValue() ?? '';
+                    $resource_speaker_rq_engagement = $sheet->getCell('Q' . $row)->getValue() ?? '';
+                    $resource_speaker_rq_visual_relevance = $sheet->getCell('R' . $row)->getValue() ?? '';
+                    $resource_speaker_ri_answer_questions = $sheet->getCell('S' . $row)->getValue() ?? '';
+                    $resource_speaker_ri_chat_responsiveness = $sheet->getCell('T' . $row)->getValue() ?? '';
+                    $moderator_rr_manage_discussion = $sheet->getCell('U' . $row)->getValue() ?? '';
+                    $moderator_rr_monitor_raises_questions = $sheet->getCell('V' . $row)->getValue() ?? '';
+                    $moderator_rr_manage_program = $sheet->getCell('W' . $row)->getValue() ?? '';
+                    $host_secretariat_rr_technical_assistance = $sheet->getCell('X' . $row)->getValue() ?? '';
+                    $host_secretariat_rr_admittance_management = $sheet->getCell('Y' . $row)->getValue() ?? '';
+                    $overall_satisfaction_rating = $sheet->getCell('Z' . $row)->getValue() ?? '';
+                    $feedback_dissatisfied_reasons = $sheet->getCell('AA' . $row)->getValue() ?? '';
+                    $feedback_improvement_suggestions = $sheet->getCell('AB' . $row)->getValue() ?? '';
+                    
+                    // Insert into clients table with completion date
                     $stmt = $conn->prepare("INSERT INTO clients (timestamp, client_name, client_type, sex, age, region, contact,
                     email, service_ro_objectives_achieved, service_ro_info_received, service_ro_relevance_value,
                     service_ro_duration_sufficient, service_af_sign_up_access, service_af_audio_video_sync, resource_speaker_rq_knowledge,
                     resource_speaker_rq_clarity, resource_speaker_rq_engagement, resource_speaker_rq_visual_relevance, resource_speaker_ri_answer_questions,
                     resource_speaker_ri_chat_responsiveness, moderator_rr_manage_discussion, moderator_rr_monitor_raises_questions, moderator_rr_manage_program,
                     host_secretariat_rr_technical_assistance, host_secretariat_rr_admittance_management, overall_satisfaction_rating,
-                    feedback_dissatisfied_reasons, feedback_improvement_suggestions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    feedback_dissatisfied_reasons, feedback_improvement_suggestions, completion_date, cert_type) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-                    $stmt->bind_param("ssssssssssssssssssssssssssss", $timestamp, $client_name, $client_type, $sex, $age, $region, $contact, $email,
+                    $stmt->bind_param("sssssssssssssssssssssssssssss", $timestamp, $client_name, $client_type, $sex, $age, $region, $contact, $email,
                     $service_ro_objectives_achieved, $service_ro_info_received, $service_ro_relevance_value, $service_ro_duration_sufficient,
                     $service_af_sign_up_access, $service_af_audio_video_sync, $resource_speaker_rq_knowledge, $resource_speaker_rq_clarity,
                     $resource_speaker_rq_engagement, $resource_speaker_rq_visual_relevance, $resource_speaker_ri_answer_questions,
                     $resource_speaker_ri_chat_responsiveness, $moderator_rr_manage_discussion, $moderator_rr_monitor_raises_questions,
                     $moderator_rr_manage_program, $host_secretariat_rr_technical_assistance, $host_secretariat_rr_admittance_management,
-                    $overall_satisfaction_rating, $feedback_dissatisfied_reasons, $feedback_improvement_suggestions);
-                    $stmt->execute();
+                    $overall_satisfaction_rating, $feedback_dissatisfied_reasons, $feedback_improvement_suggestions, $completion_date, $cert_type);
+                    
+                    // Execute the statement and handle any errors
+                    try {
+                        $stmt->execute();
+                    } catch (Exception $e) {
+                        echo "Error inserting row $row: " . $e->getMessage() . "<br>";
+                    }
                 }
-            } else {
-                echo "Error uploading the file.";
             }
-        } else {
-            echo "There was an error with the file upload.";
         }
-    }
+    } 
 }
 
 
@@ -235,6 +244,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_file_id'])) {
 }
 
 $conn->close(); // Close the database connection
+
+
 ?>
 
 <!DOCTYPE html>
@@ -244,7 +255,6 @@ $conn->close(); // Close the database connection
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload</title>
     <link rel="stylesheet" href="style5.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
@@ -275,15 +285,82 @@ $conn->close(); // Close the database connection
             document.getElementById('delete_file_id').value = fileId;
             document.getElementById('delete_file_name').textContent = fileName;
         }
+        // JavaScript to update the input field with the selected file name
+    function updateFileName(input) {
+        var fileName = input.files[0] ? input.files[0].name : '';
+        document.getElementById('file_name_input').value = fileName;
+    }
+   
+    // JavaScript to update the edit form with the selected file name
+    function updateEditFileName(input) {
+        var fileName = input.files[0] ? input.files[0].name : '';
+        document.getElementById('edit_file_name_display').textContent = fileName;
+    }
+   
+    // Function to populate the edit modal with file data
+    function populateEditModal(fileId, fileName, filePath) {
+        document.getElementById('edit_file_id').value = fileId;
+        document.getElementById('edit_file_name').value = fileName;
+        document.getElementById('current_file_path').textContent = filePath;
+        document.getElementById('edit_file_name_display').textContent = "No new file selected";
+    }
+    
+    // Function to populate the delete modal with file data
+    function populateDeleteModal(fileId, fileName) {
+        document.getElementById('delete_file_id').value = fileId;
+        document.getElementById('delete_file_name').textContent = fileName;
+    }
+    
+    // Function to show certificate preview
+    function showCertificatePreview(previewElementId, certificateId) {
+        const previewElement = document.getElementById(previewElementId);
+        
+        if (!certificateId) {
+            previewElement.innerHTML = '<p class="text-muted">No certificate selected</p>';
+            return;
+        }
+        
+        // Find the certificate data from our PHP-generated certificates array
+        const certificates = <?php echo json_encode($certificates); ?>;
+        const certificate = certificates.find(cert => cert.id === certificateId);
+        
+        if (certificate) {
+            previewElement.innerHTML = `
+                <img src="${certificate.file_path}" alt="${certificate.name}" class="certificate-preview">
+                <p class="mt-2"><strong>${certificate.name}</strong></p>
+                <p class="text-muted">${certificate.description || ''}</p>
+            `;
+        } else {
+            previewElement.innerHTML = '<p class="text-danger">Certificate not found</p>';
+        }
+    }
     </script>
+        </script>
+        <style>
+        .certificate-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+        .modal-dialog.modal-lg {
+            max-width: 800px;
+        }
+        .certificate-preview-container {
+            border-left: 1px solid #dee2e6;
+            padding-left: 15px;
+        }
+    </style>
 </head>
 <body>
+    <div class="main-content" style="margin-top: 120px;">
     <button class="btn btn-primary upload-btn" data-toggle="modal" data-target="#uploadModal">
         <i class="bi bi-plus"></i> Upload New Sheet
     </button>
-    <!-- Modal for File Upload -->
-    <div class="modal" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <!-- Modal for File Upload -->
+        <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <form action="sheet.php" method="POST" enctype="multipart/form-data">
                     <div class="modal-header">
@@ -293,13 +370,36 @@ $conn->close(); // Close the database connection
                         </button>
                     </div>
                     <div class="modal-body">
-                        <!-- File Name Input Field (Above File Upload Input) -->
-                        <label for="file_name_input">Sheet Information:</label>
-                        <input type="text" id="file_name_input" name="file_name" value="" placeholder="Enter file name" class="form-control"><br>
-                       
-                        <!-- File Upload Input -->
-                        <label for="file_upload">File Upload (Excel File):</label>
-                        <input type="file" id="file_upload" name="file_upload[]" accept=".xlsx, .xls" multiple required onchange="updateFileName(this)">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <!-- File Name Input Field (Above File Upload Input) -->
+                                <label for="file_name_input">Sheet Information:</label>
+                                <input type="text" id="file_name_input" name="file_name" value="" placeholder="Enter file name" class="form-control"><br>
+                                
+                                <!-- Completion Date Input -->
+                                <label for="completion_date">Completion Date:</label>
+                                <input type="date" id="completion_date" name="completion_date" class="form-control" required><br>
+                                
+                                <!-- Certificate Type Dropdown -->
+                                <label for="cert_type">Certificate Type:</label>
+                                <select id="cert_type" name="cert_type" class="form-control" onchange="showCertificatePreview('cert_preview', this.value)">
+                                    <option value="">-- Select Certificate --</option>
+                                    <?php foreach ($certificates as $cert): ?>
+                                    <option value="<?php echo $cert['id']; ?>"><?php echo htmlspecialchars($cert['name']); ?></option>
+                                    <?php endforeach; ?>
+                                </select><br>
+                                
+                                <!-- File Upload Input -->
+                                <label for="file_upload">File Upload (Excel File):</label>
+                                <input type="file" id="file_upload" name="file_upload[]" accept=".xlsx, .xls" multiple required onchange="updateFileName(this)" class="form-control-file">
+                            </div>
+                            <div class="col-md-5 certificate-preview-container">
+                                <h6>Certificate Preview:</h6>
+                                <div id="cert_preview">
+                                    <p class="text-muted">No certificate selected</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <div class="button-container">
@@ -429,9 +529,14 @@ $conn->close(); // Close the database connection
                     </div>
                 </div>
             </div>
+        </div>
         <?php }
     } else { ?>
         <div class="alert alert-info">No files have been uploaded yet.</div>
     <?php } ?>
+    <?php
+// Include the footer
+include('footer.php');
+?>
 </body>
 </html>
