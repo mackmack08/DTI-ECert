@@ -97,7 +97,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file_upload'])) {
                     $overall_satisfaction_rating = $sheet->getCell('Z' . $row)->getValue();
                     $feedback_dissatisfied_reasons = $sheet->getCell('AA' . $row)->getValue();
                     $feedback_improvement_suggestions = $sheet->getCell('AB' . $row)->getValue();
-                   
+                    
+                    $timestamp = $timestamp ?? '';
+                    $client_name = $client_name ?? '';
+                    $client_type = $client_type ?? '';
+                    $sex = $sex ?? '';
+                    $age = $age ?? '';
+                    $region = $region ?? '';
+                    $contact = $contact ?? '';
+                    $email = $email ?? '';
+                    $service_ro_objectives_achieved = $service_ro_objectives_achieved ?? '';
+                    $service_ro_info_received = $service_ro_info_received ?? '';
+                    $service_ro_relevance_value = $service_ro_relevance_value ?? '';
+                    $service_ro_duration_sufficient = $service_ro_duration_sufficient ?? '';
+                    $service_af_sign_up_access = $service_af_sign_up_access ?? '';
+                    $service_af_audio_video_sync = $service_af_audio_video_sync ?? '';
+                    $resource_speaker_rq_knowledge = $resource_speaker_rq_knowledge ?? '';
+                    $resource_speaker_rq_clarity = $resource_speaker_rq_clarity ?? '';
+                    $resource_speaker_rq_engagement = $resource_speaker_rq_engagement ?? '';
+                    $resource_speaker_rq_visual_relevance = $resource_speaker_rq_visual_relevance ?? '';
+                    $resource_speaker_ri_answer_questions = $resource_speaker_ri_answer_questions ?? '';
+                    $resource_speaker_ri_chat_responsiveness = $resource_speaker_ri_chat_responsiveness ?? '';
+                    $moderator_rr_manage_discussion = $moderator_rr_manage_discussion ?? '';
+                    $moderator_rr_monitor_raises_questions = $moderator_rr_monitor_raises_questions ?? '';
+                    $moderator_rr_manage_program = $moderator_rr_manage_program ?? '';
+                    $host_secretariat_rr_technical_assistance = $host_secretariat_rr_technical_assistance ?? '';
+                    $host_secretariat_rr_admittance_management = $host_secretariat_rr_admittance_management ?? '';
+                    $overall_satisfaction_rating = $overall_satisfaction_rating ?? '';
+                    $feedback_dissatisfied_reasons = $feedback_dissatisfied_reasons ?? '';
+                    $feedback_improvement_suggestions = $feedback_improvement_suggestions ?? '';
+
                     // Insert into clients table
                     $stmt = $conn->prepare("INSERT INTO clients (timestamp, client_name, client_type, sex, age, region, contact,
                     email, service_ro_objectives_achieved, service_ro_info_received, service_ro_relevance_value,
@@ -406,4 +435,3 @@ $conn->close(); // Close the database connection
     <?php } ?>
 </body>
 </html>
-
