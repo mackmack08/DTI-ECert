@@ -1,0 +1,2 @@
+[22-Apr-2025 08:06:39 Europe/Berlin] PHP Warning:  file_put_contents(uploads/certificate/certificate_1745301999.png): Failed to open stream: No such file or directory in C:\xampp\htdocs\DTI\save_certificate.php on line 73
+[22-Apr-2025 08:06:51 Europe/Berlin] PHP Warning:  file_put_contents(uploads/certificate/certificate_1745302011.png): Failed to open stream: No such file or directory in C:\xampp\htdocs\DTI\save_certificate.php on line 73

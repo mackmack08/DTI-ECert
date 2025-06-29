@@ -1,0 +1,352 @@
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Dashboard container */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Dashboard header */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.dashboard-header h1 {
+    color: #2c3e50;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.date {
+    color: #7f8c8d;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Navigation */
+.navigation {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn i {
+    margin-right: 8px;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* Cards container */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 16px;
+    color: #7f8c8d;
+    font-weight: 500;
+}
+
+.card-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ecf0f1;
+    border-radius: 50%;
+    color: #3498db;
+    font-size: 18px;
+}
+
+.card-value {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Graph containers */
+.graph-container {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+}
+
+.graph-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.graph-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.graph-controls {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.time-selector {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #2c3e50;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+    min-width: 100px;
+}
+
+.time-selector:hover {
+    border-color: #3498db;
+}
+
+.time-selector:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.graph-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.graph-col {
+    flex: 1;
+    min-width: 300px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.small-chart-container {
+    height: 300px;
+    width: 100%;
+}
+
+/* Certificate indicator */
+.cert-indicator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    width: fit-content;
+}
+
+.cert-indicator-color {
+    width: 16px;
+    height: 16px;
+    background-color: rgba(52, 152, 219, 0.7);
+    border-radius: 3px;
+    margin-right: 8px;
+}
+
+.cert-indicator-label {
+    font-size: 14px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+/* Loading indicator */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    border-radius: 12px;
+    display: none;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(52, 152, 219, 0.3);
+    border-radius: 50%;
+    border-top-color: #3498db;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .navigation {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .graph-row {
+        flex-direction: column;
+    }
+    
+    .graph-col {
+        width: 100%;
+    }
+    
+    .card-value {
+        font-size: 28px;
+    }
+    
+    .graph-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .graph-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .time-selector {
+        flex-grow: 1;
+    }
+    
+    .small-chart-container {
+        height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-header h1 {
+        font-size: 24px;
+    }
+    
+    .date {
+        font-size: 14px;
+    }
+    
+    .card {
+        padding: 15px;
+    }
+    
+    .card-value {
+        font-size: 24px;
+    }
+    
+    .small-chart-container {
+        height: 200px;
+    }
+    
+    .graph-title {
+        font-size: 16px;
+    }
+    
+    .cert-indicator {
+        padding: 6px 10px;
+    }
+    
+    .cert-indicator-label {
+        font-size: 12px;
+    }
+    
+    .time-selector {
+        padding: 6px 10px;
+        font-size: 13px;
+        min-width: 0;
+    }
+    
+    .graph-controls {
+        gap: 5px;
+    }
+}
+
+
+
